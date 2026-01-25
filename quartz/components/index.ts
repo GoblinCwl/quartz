@@ -24,6 +24,7 @@ import Comments from "./Comments"
 import ArtalkComments from "./ArtalkComments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
+import ScrollButton from "./ScrollButton"
 
 export {
   ArticleTitle,
@@ -52,4 +53,5 @@ export {
   ArtalkComments,
   Flex,
   ConditionalRender,
+  ScrollButton,
 }

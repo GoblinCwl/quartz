@@ -1,5 +1,6 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
+import CustomContentMeta from "./quartz/components/CustomContentMeta"
 
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
@@ -29,7 +30,11 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
-    Component.ContentMeta(),
+    CustomContentMeta({
+      showReadingTime: false,
+      datePrefix: "更新于：",
+      includeSeconds: true
+    }),
     Component.TagList(),
   ],
   left: [
@@ -51,6 +56,10 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Graph(),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
+    Component.ScrollButton({
+      position: "bottom-right",
+      showOnlyOnDesktop: true
+    }),
   ],
 }
 

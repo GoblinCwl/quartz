@@ -79,6 +79,7 @@ const config: QuartzConfig = {
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
+        // 日语注音
       Plugin.Furigana({ enabled: true }),
     ],
     filters: [Plugin.RemoveDrafts(),Plugin.ExplicitPublish()],
