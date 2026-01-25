@@ -81,6 +81,8 @@ const config: QuartzConfig = {
       Plugin.Latex({ renderEngine: "katex" }),
         // 日语注音
       Plugin.Furigana({ enabled: true }),
+      // 角标插件
+      Plugin.Subscript({ enabled: true }),
     ],
     filters: [Plugin.RemoveDrafts(),Plugin.ExplicitPublish()],
     emitters: [

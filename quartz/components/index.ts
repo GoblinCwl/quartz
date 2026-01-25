@@ -25,6 +25,7 @@ import ArtalkComments from "./ArtalkComments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
 import ScrollButton from "./ScrollButton"
+import Subscript from "./Subscript"
 
 export {
   ArticleTitle,
@@ -54,4 +55,5 @@ export {
   Flex,
   ConditionalRender,
   ScrollButton,
+  Subscript,
 }

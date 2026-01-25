@@ -12,6 +12,7 @@ export const sharedPageComponents: SharedLayout = {
       site: 'CwlLibrary',
       useBackendConf: true
     }),
+    Component.Subscript(),
   ],
   footer: Component.Footer({
     links: {
