@@ -1,17 +1,29 @@
-export declare global {
-  interface Document {
-    addEventListener<K extends keyof CustomEventMap>(
-      type: K,
-      listener: (this: Document, ev: CustomEventMap[K]) => void,
-    ): void
-    removeEventListener<K extends keyof CustomEventMap>(
-      type: K,
-      listener: (this: Document, ev: CustomEventMap[K]) => void,
-    ): void
-    dispatchEvent<K extends keyof CustomEventMap>(ev: CustomEventMap[K] | UIEvent): void
-  }
+// Global type definitions for Quartz
+declare module "*.scss" {
+  const content: string
+  export default content
+}
+
+declare module "*.inline.scss" {
+  const content: string
+  export default content
+}
+
+declare module "*.inline.ts" {
+  const content: string
+  export default content
+}
+
+declare module "*.inline.js" {
+  const content: string
+  export default content
+}
+
+// Artalk global type definition
+declare global {
   interface Window {
-    spaNavigate(url: URL, isBack: boolean = false)
-    addCleanup(fn: (...args: any[]) => void)
+    Artalk: any
   }
 }
+
+export {}
