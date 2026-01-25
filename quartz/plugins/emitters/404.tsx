@@ -51,9 +51,10 @@ export const NotFoundPage: QuartzEmitterPlugin = () => {
         allFiles: [],
       }
 
+      const prepageContent = await renderPage(cfg, slug, componentData, opts, externalResources);
       yield write({
         ctx,
-        content: renderPage(cfg, slug, componentData, opts, externalResources),
+        content: prepageContent,
         slug,
         ext: ".html",
       })

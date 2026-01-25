@@ -26,6 +26,10 @@ const config: QuartzConfig = {
       "**/!(*.md)",
     ],
     defaultDateType: "modified",
+    passProtected: {
+      enabled: true,
+      iteration: 2e6,
+    },
     theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,
