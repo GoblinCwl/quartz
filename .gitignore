@@ -10,3 +10,5 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
+.fastRequest/
+.idea/
