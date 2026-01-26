@@ -51,15 +51,11 @@ function error(code: string) {
   
   if (code === "wrong") {
     msg.classList.add("wrong-password")
-    // 触发动画：移除并重新添加类
-    msg.classList.remove("shake-animation")
-    void msg.offsetWidth // 强制重排
-    msg.classList.add("shake-animation")
     
     pwd.style.borderColor = "#e74c3c"
     pwd.style.boxShadow = "0 0 0 3px rgba(231, 76, 60, 0.1)"
   } else {
-    msg.classList.remove("wrong-password", "shake-animation")
+    msg.classList.remove("wrong-password")
     pwd.style.borderColor = ""; pwd.style.boxShadow = ""
   }
 }

@@ -25,6 +25,7 @@ const EncryptedContent: QuartzComponent = ({ encryptedContent, cfg }: QuartzComp
                         class="pwd"
                         name="pwd"
                         aria-label={i18n(cfg.locale).pages.encryptedContent.password}
+                        autocomplete="off"
                         autofocus
                     />
                     <input type="submit" value={i18n(cfg.locale).pages.encryptedContent.submit} />
