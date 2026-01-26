@@ -31,6 +31,9 @@ export default ((opts?: Partial<Options>) => {
     }
 
     const id = `toc-${numTocs++}`
+    // 如果页面加密（frontmatter中有passphrase），则添加hidden类
+    const isEncrypted = cfg.passProtected?.enabled && fileData.frontmatter?.passphrase
+
     return (
       <div class={classNames(displayClass, "toc")}>
         <button
@@ -57,7 +60,7 @@ export default ((opts?: Partial<Options>) => {
         </button>
         <OverflowList
           id={id}
-          class={fileData.collapseToc ? "collapsed toc-content" : "toc-content"}
+          class={`${fileData.collapseToc ? "collapsed " : ""}toc-content ${isEncrypted ? "hidden" : ""}`}
         >
           {fileData.toc.map((tocEntry) => (
             <li key={tocEntry.slug} class={`depth-${tocEntry.depth}`}>

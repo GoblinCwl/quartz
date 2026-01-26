@@ -71,6 +71,40 @@ async function decrypt() {
     const decrypted = await decryptFile({ salt, iv, ciphertext, iterations }, pwd.value)
     article.innerHTML = decrypted
     hide(lock)
+    
+    // 解密成功后，显示目录内容
+    const tocContentElements = document.getElementsByClassName("toc-content overflow")
+    for (let i = 0; i < tocContentElements.length; i++) {
+      if (tocContentElements[i] instanceof HTMLElement) {
+        tocContentElements[i].classList.remove("hidden")
+      }
+    }
+    
+    // 重新初始化目录的滚动监听功能，但要小心避免无限循环
+    setTimeout(() => {
+      // 创建一个临时的IntersectionObserver来处理解密后的内容
+      const tempObserver = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          const slug = entry.target.id
+          const tocEntryElements = document.querySelectorAll(`a[data-for="${slug}"]`)
+          const windowHeight = entry.rootBounds?.height
+          if (windowHeight && tocEntryElements.length > 0) {
+            if (entry.boundingClientRect.y < windowHeight) {
+              tocEntryElements.forEach((tocEntryElement) => tocEntryElement.classList.add("in-view"))
+            } else {
+              tocEntryElements.forEach((tocEntryElement) => tocEntryElement.classList.remove("in-view"))
+            }
+          }
+        }
+      })
+      
+      // 观察解密后内容中的标题元素
+      const headers = document.querySelectorAll("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]")
+      headers.forEach((header) => tempObserver.observe(header))
+      
+      // 将临时observer赋值给全局变量，以便在需要时可以断开连接
+      ;(window as any).decryptedContentObserver = tempObserver;
+    }, 10)
   } catch (e) {
     if (sessionStorage[document.body.dataset.slug!]) {
       sessionStorage.removeItem(document.body.dataset.slug!)
