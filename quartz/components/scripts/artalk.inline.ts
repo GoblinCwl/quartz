@@ -1,6 +1,37 @@
 // 保存Artalk实例的引用
 let artalkInstance: any = null;
 
+// 预加载Artalk资源
+const preloadArtalkResources = () => {
+  const artalkContainer: HTMLElement | null = document.getElementById("artalk-comments");
+  if (!artalkContainer) {
+    return;
+  }
+  
+  const server: string = artalkContainer.getAttribute("data-server") || "";
+  
+  // 检查是否已经预加载过
+  if (document.querySelector(`link[href*="${server}/dist/Artalk.css"][rel="preload"]`)) {
+    return;
+  }
+  
+  // 预加载 CSS
+  const cssLink = document.createElement("link");
+  cssLink.rel = "preload";
+  cssLink.as = "style";
+  cssLink.href = `${server}/dist/Artalk.css`;
+  cssLink.crossOrigin = "anonymous";
+  document.head.appendChild(cssLink);
+  
+  // 预加载 JS
+  const jsLink = document.createElement("link");
+  jsLink.rel = "preload";
+  jsLink.as = "script";
+  jsLink.href = `${server}/dist/Artalk.js`;
+  jsLink.crossOrigin = "anonymous";
+  document.head.appendChild(jsLink);
+};
+
 // 检查页面是否被加密
 const isPageEncrypted = (): boolean => {
   const lockElement = document.getElementById("lock");
@@ -46,18 +77,37 @@ const tryLoadArtalk = () => {
   
   // 动态加载Artalk CSS
   const loadArtalkCSS = () => {
-    if (document.querySelector(`link[href*='Artalk.css']`)) {
-      return
-    }
+    return new Promise<void>((resolve) => {
+      const server: string = artalkContainer.getAttribute("data-server") || ""
+      const cssUrl: string = `${server}/dist/Artalk.css`
+      
+      // 检查是否已经加载了相同的CSS
+      const existingLink = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+        .find((link: HTMLLinkElement) => link.href === cssUrl) as HTMLLinkElement;
+        
+      if (existingLink) {
+        // 如果CSS已经加载，直接resolve
+        resolve();
+        return;
+      }
 
-    const server: string = artalkContainer.getAttribute("data-server") || ""
-    const cssUrl: string = `${server}/dist/Artalk.css`
-    
-    const link: HTMLLinkElement = document.createElement("link")
-    link.rel = "stylesheet"
-    link.type = "text/css"
-    link.href = cssUrl
-    document.head.appendChild(link)
+      const link: HTMLLinkElement = document.createElement("link")
+      link.rel = "stylesheet"
+      link.type = "text/css"
+      link.href = cssUrl
+      link.crossOrigin = "anonymous";
+      
+      // 等待CSS加载完成后再resolve
+      link.onload = () => {
+        resolve();
+      };
+      
+      link.onerror = () => {
+        resolve(); // 即使出错也要resolve，不要阻塞后续流程
+      };
+      
+      document.head.appendChild(link)
+    });
   }
 
   // 动态加载Artalk脚本
@@ -70,6 +120,7 @@ const tryLoadArtalk = () => {
     const artalkScript: HTMLScriptElement = document.createElement("script")
     const server: string = artalkContainer.getAttribute("data-server") || ""
     artalkScript.src = `${server}/dist/Artalk.js`
+    artalkScript.crossOrigin = "anonymous";
     artalkScript.onload = () => {
       initArtalk()
       const savedTheme: string | null = localStorage.getItem('artalk-theme-preference')
@@ -86,6 +137,7 @@ const tryLoadArtalk = () => {
       console.error("Failed to load Artalk script from server")
       const fallbackScript: HTMLScriptElement = document.createElement("script")
       fallbackScript.src = "https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"
+      fallbackScript.crossOrigin = "anonymous";
       fallbackScript.onload = () => {
         initArtalk()
         const savedTheme: string | null = localStorage.getItem('artalk-theme-preference')
@@ -148,8 +200,10 @@ const tryLoadArtalk = () => {
       }
     }
 
-    loadArtalkCSS()
-    loadArtalk()
+    // 先加载CSS，等CSS加载完成后再加载JS
+    loadArtalkCSS().then(() => {
+      loadArtalk();
+    });
 
   // 监听主题和ReaderMode变化
   document.addEventListener("themechange" as any, changeArtalkTheme)
@@ -165,6 +219,9 @@ const tryLoadArtalk = () => {
 
 // 检查页面加密状态并在适当时候加载Artalk
 const handleArtalkLoading = () => {
+  // 预加载资源
+  preloadArtalkResources();
+  
   // 如果页面没有被加密，直接加载Artalk
   if (!isPageEncrypted()) {
     tryLoadArtalk();
