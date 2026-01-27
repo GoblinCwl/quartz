@@ -117,6 +117,14 @@ async function decrypt() {
       // 将临时observer赋值给全局变量，以便在需要时可以断开连接
       ;(window as any).decryptedContentObserver = tempObserver;
     }, 10)
+
+    // 触发解密完成事件，通知其他组件（如Artalk）可以加载了
+    const decryptCompleteEvent = new CustomEvent('decryptComplete', {
+      detail: { success: true },
+      bubbles: true,
+      cancelable: true
+    });
+    document.dispatchEvent(decryptCompleteEvent);
   } catch (e) {
     const slug = document.body.dataset.slug!
     if (sessionStorage[`${slug}_content`] || sessionStorage[`${slug}_toc`]) {

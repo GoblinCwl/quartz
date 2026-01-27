@@ -1,6 +1,12 @@
 // 保存Artalk实例的引用
 let artalkInstance: any = null;
 
+// 检查页面是否被加密
+const isPageEncrypted = (): boolean => {
+  const lockElement = document.getElementById("lock");
+  return lockElement !== null && lockElement.classList.contains("hidden") === false;
+};
+
 // Artalk主题切换处理
 const changeArtalkTheme = (e: any) => {
   const theme: string = e.detail.theme
@@ -31,36 +37,56 @@ const changeArtalkReaderMode = (e: any) => {
   }
 }
 
-document.addEventListener("nav", () => {
+// 尝试加载Artalk
+const tryLoadArtalk = () => {
   const artalkContainer: HTMLElement | null = document.getElementById("artalk-comments")
-  if (artalkContainer) {
-    // 动态加载Artalk CSS
-    const loadArtalkCSS = () => {
-      if (document.querySelector(`link[href*='Artalk.css']`)) {
-        return
-      }
-
-      const server: string = artalkContainer.getAttribute("data-server") || ""
-      const cssUrl: string = `${server}/dist/Artalk.css`
-      
-      const link: HTMLLinkElement = document.createElement("link")
-      link.rel = "stylesheet"
-      link.type = "text/css"
-      link.href = cssUrl
-      document.head.appendChild(link)
+  if (!artalkContainer) {
+    return;
+  }
+  
+  // 动态加载Artalk CSS
+  const loadArtalkCSS = () => {
+    if (document.querySelector(`link[href*='Artalk.css']`)) {
+      return
     }
 
-    // 动态加载Artalk脚本
-    const loadArtalk = () => {
-      if ((window as any).Artalk) {
-        initArtalk()
-        return
-      }
+    const server: string = artalkContainer.getAttribute("data-server") || ""
+    const cssUrl: string = `${server}/dist/Artalk.css`
+    
+    const link: HTMLLinkElement = document.createElement("link")
+    link.rel = "stylesheet"
+    link.type = "text/css"
+    link.href = cssUrl
+    document.head.appendChild(link)
+  }
 
-      const artalkScript: HTMLScriptElement = document.createElement("script")
-      const server: string = artalkContainer.getAttribute("data-server") || ""
-      artalkScript.src = `${server}/dist/Artalk.js`
-      artalkScript.onload = () => {
+  // 动态加载Artalk脚本
+  const loadArtalk = () => {
+    if ((window as any).Artalk) {
+      initArtalk()
+      return
+    }
+
+    const artalkScript: HTMLScriptElement = document.createElement("script")
+    const server: string = artalkContainer.getAttribute("data-server") || ""
+    artalkScript.src = `${server}/dist/Artalk.js`
+    artalkScript.onload = () => {
+      initArtalk()
+      const savedTheme: string | null = localStorage.getItem('artalk-theme-preference')
+      if (savedTheme) {
+        setTimeout(() => {
+          if (artalkInstance && typeof artalkInstance.setDarkMode === 'function') {
+            const isDarkMode: boolean = savedTheme === 'dark'
+            artalkInstance.setDarkMode(isDarkMode)
+          }
+        }, 100)
+      }
+    }
+    artalkScript.onerror = () => {
+      console.error("Failed to load Artalk script from server")
+      const fallbackScript: HTMLScriptElement = document.createElement("script")
+      fallbackScript.src = "https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"
+      fallbackScript.onload = () => {
         initArtalk()
         const savedTheme: string | null = localStorage.getItem('artalk-theme-preference')
         if (savedTheme) {
@@ -72,47 +98,31 @@ document.addEventListener("nav", () => {
           }, 100)
         }
       }
-      artalkScript.onerror = () => {
-        console.error("Failed to load Artalk script from server")
-        const fallbackScript: HTMLScriptElement = document.createElement("script")
-        fallbackScript.src = "https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"
-        fallbackScript.onload = () => {
-          initArtalk()
-          const savedTheme: string | null = localStorage.getItem('artalk-theme-preference')
-          if (savedTheme) {
-            setTimeout(() => {
-              if (artalkInstance && typeof artalkInstance.setDarkMode === 'function') {
-                const isDarkMode: boolean = savedTheme === 'dark'
-                artalkInstance.setDarkMode(isDarkMode)
-              }
-            }, 100)
-          }
-        }
-        fallbackScript.onerror = () => {
-          console.error("Failed to load Artalk script from CDN fallback")
-        }
-        document.head.appendChild(fallbackScript)
+      fallbackScript.onerror = () => {
+        console.error("Failed to load Artalk script from CDN fallback")
       }
-      document.head.appendChild(artalkScript)
+      document.head.appendChild(fallbackScript)
+    }
+    document.head.appendChild(artalkScript)
+  }
+
+  // 初始化Artalk
+  const initArtalk = () => {
+    if (!(window as any).Artalk) {
+      console.error("Artalk is not loaded")
+      return
     }
 
-    // 初始化Artalk
-    const initArtalk = () => {
-      if (!(window as any).Artalk) {
-        console.error("Artalk is not loaded")
-        return
-      }
-
-      const server: string = artalkContainer.getAttribute("data-server") || ""
-      const site: string = artalkContainer.getAttribute("data-site") || ""
-      const theme: string = artalkContainer.getAttribute("data-theme") || "light"
-      const lang: string = artalkContainer.getAttribute("data-lang") || "zh-CN"
-      const useBackendConf: boolean = artalkContainer.getAttribute("data-use-backend-conf") === "true"
-      const pageKey: string = artalkContainer.getAttribute("data-page-key") || ""
-      const pageTitle: string = artalkContainer.getAttribute("data-page-title") || ""
-      
-      const currentTheme: string = document.documentElement.getAttribute('saved-theme') || document.documentElement.getAttribute('data-theme') || 'light'
-      const isCurrentlyDark: boolean = currentTheme === 'dark'
+    const server: string = artalkContainer.getAttribute("data-server") || ""
+    const site: string = artalkContainer.getAttribute("data-site") || ""
+    const theme: string = artalkContainer.getAttribute("data-theme") || "light"
+    const lang: string = artalkContainer.getAttribute("data-lang") || "zh-CN"
+    const useBackendConf: boolean = artalkContainer.getAttribute("data-use-backend-conf") === "true"
+    const pageKey: string = artalkContainer.getAttribute("data-page-key") || ""
+    const pageTitle: string = artalkContainer.getAttribute("data-page-title") || ""
+    
+    const currentTheme: string = document.documentElement.getAttribute('saved-theme') || document.documentElement.getAttribute('data-theme') || 'light'
+    const isCurrentlyDark: boolean = currentTheme === 'dark'
 
       // @ts-ignore - Artalk API
       artalkInstance = (window as any).Artalk.init({
@@ -141,15 +151,34 @@ document.addEventListener("nav", () => {
     loadArtalkCSS()
     loadArtalk()
 
-    // 监听主题和ReaderMode变化
-    document.addEventListener("themechange" as any, changeArtalkTheme)
-    document.addEventListener("readermodechange" as any, changeArtalkReaderMode)
-    
-    if (window && (window as any).addCleanup) {
-      (window as any).addCleanup(() => {
-        document.removeEventListener("themechange" as any, changeArtalkTheme)
-        document.removeEventListener("readermodechange" as any, changeArtalkReaderMode)
-      })
-    }
+  // 监听主题和ReaderMode变化
+  document.addEventListener("themechange" as any, changeArtalkTheme)
+  document.addEventListener("readermodechange" as any, changeArtalkReaderMode)
+  
+  if (window && (window as any).addCleanup) {
+    (window as any).addCleanup(() => {
+      document.removeEventListener("themechange" as any, changeArtalkTheme)
+      document.removeEventListener("readermodechange" as any, changeArtalkReaderMode)
+    })
   }
-})
+};
+
+// 检查页面加密状态并在适当时候加载Artalk
+const handleArtalkLoading = () => {
+  // 如果页面没有被加密，直接加载Artalk
+  if (!isPageEncrypted()) {
+    tryLoadArtalk();
+    return;
+  }
+
+  // 如果页面被加密，等待解密完成事件
+  document.addEventListener('decryptComplete', () => {
+    // 延迟加载，确保内容已完全替换
+    setTimeout(() => {
+      tryLoadArtalk();
+    }, 100);
+  });
+};
+
+// 在导航事件中处理Artalk加载
+document.addEventListener("nav", handleArtalkLoading);
