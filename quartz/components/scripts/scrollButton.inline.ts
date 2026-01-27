@@ -14,7 +14,7 @@ function setupScrollButtons() {
   if (scrollBottomBtn) {
     scrollBottomBtn.addEventListener("click", () => {
       window.scrollTo({
-        top: document.body.scrollHeight,
+        top: document.documentElement.scrollHeight,
         behavior: "smooth"
       })
     })
@@ -27,3 +27,8 @@ if (document.readyState === "loading") {
 } else {
   setupScrollButtons()
 }
+
+// Also listen for navigation events which may re-render the page
+document.addEventListener("nav", () => {
+  setTimeout(setupScrollButtons, 100) // Small delay to ensure DOM is updated
+})

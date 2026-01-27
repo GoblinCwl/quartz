@@ -87,10 +87,13 @@ async function decrypt() {
   submitBtn.value = loadText.getAttribute("data-decrypt") || "解密中..."
 
   try {
+    let contentHtml = await decryptFile({salt, iv, ciphertext, iterations}, pwd.value)
+    let tocHtml = await decryptFile_toc({salt_toc, iv_toc, ciphertext_toc, iterations_toc}, pwd.value)
     hide(lock)
 
-    article.innerHTML = await decryptFile({salt, iv, ciphertext, iterations}, pwd.value)
-    article_graph.insertAdjacentHTML("afterend",await decryptFile_toc({salt_toc, iv_toc, ciphertext_toc, iterations_toc}, pwd.value))
+    article.innerHTML = contentHtml
+    article_graph.insertAdjacentHTML("afterend",tocHtml)
+
 
     // 重新初始化目录的滚动监听功能，但要小心避免无限循环
     setTimeout(() => {
@@ -130,11 +133,12 @@ async function decrypt() {
     if (sessionStorage[`${slug}_content`] || sessionStorage[`${slug}_toc`]) {
       sessionStorage.removeItem(`${slug}_content`)
       sessionStorage.removeItem(`${slug}_toc`)
+    } else {
+      error("wrong")
     }
     show(lock)
     pwd.value = ""
     pwd.focus()
-    console.error(e)
   } finally {
     submitBtn.disabled = false
     submitBtn.value = originalText
