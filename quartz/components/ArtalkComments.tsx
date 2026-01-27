@@ -3,6 +3,8 @@ import { classNames } from "../util/lang"
 // @ts-ignore
 import script from "./scripts/artalk.inline"
 // @ts-ignore
+import style from "./styles/artalk.scss"
+// @ts-ignore
 import readerModeStyle from "./styles/artalk-readermode.scss"
 
 type Options = {
@@ -30,7 +32,7 @@ export default ((opts: Options) => {
     return (
       <div
         id="artalk-comments"
-        class={classNames(displayClass, "artalk-comments")}
+        class={classNames(displayClass, "artalk-comments", "artalk-loading")}
         data-server={opts.server}
         data-site={opts.site}
         data-theme={opts.theme ?? "light"}
@@ -44,7 +46,7 @@ export default ((opts: Options) => {
   }
 
   ArtalkComments.afterDOMLoaded = script
-  ArtalkComments.css = readerModeStyle
+  ArtalkComments.css = [style, readerModeStyle]
 
   return ArtalkComments
 }) satisfies QuartzComponentConstructor<Options>

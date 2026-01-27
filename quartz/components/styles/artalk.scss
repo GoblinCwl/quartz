@@ -1,0 +1,144 @@
+/* Artalk Comments base styles */
+
+/* 适配项目的配色方案 - 从Quartz的CSS变量中获取 */
+:root {
+  --artalk-custom-light: var(--light);
+  --artalk-custom-lightgray: var(--lightgray);
+  --artalk-custom-gray: var(--gray);
+  --artalk-custom-darkgray: var(--darkgray);
+  --artalk-custom-dark: var(--dark);
+  --artalk-custom-secondary: var(--secondary);
+  --artalk-custom-tertiary: var(--tertiary);
+  --artalk-custom-highlight: var(--highlight);
+  --artalk-custom-main: var(--at-color-main, #0083ff);
+  --artalk-custom-morelight: var(--moreLight); /* 使用Quartz配置中的moreLight值 */
+}
+
+html[data-theme="dark"] {
+  --artalk-custom-light: var(--light);
+  --artalk-custom-lightgray: var(--lightgray);
+  --artalk-custom-gray: var(--gray);
+  --artalk-custom-darkgray: var(--darkgray);
+  --artalk-custom-dark: var(--dark);
+  --artalk-custom-secondary: var(--secondary);
+  --artalk-custom-tertiary: var(--tertiary);
+  --artalk-custom-highlight: var(--highlight);
+  --artalk-custom-main: var(--at-color-main, #0083ff);
+  --artalk-custom-morelight: var(--moreLight); /* 使用Quartz配置中的moreLight值 */
+}
+
+.artalk-comments {
+  visibility: visible; /* 默认显示，以防JavaScript失效 */
+  
+  /* 初始隐藏状态，直到CSS加载完成 */
+  &.artalk-loading {
+    visibility: hidden;
+  }
+  
+  transition: visibility 0.1s ease;
+}
+
+/* 确保在没有JavaScript的情况下也有基本的可见性 */
+#artalk-comments {
+  visibility: visible;
+}
+
+/* 重写Artalk的loading动画颜色，使用项目配色 */
+.artalk .atk-loading-spinner svg circle {
+  animation: atkCustomColor 6s ease-in-out infinite;
+}
+
+@keyframes atkCustomColor {
+  0%, to {
+    stroke: var(--artalk-custom-secondary);
+  }
+
+  40% {
+    stroke: var(--artalk-custom-tertiary);
+  }
+
+  66% {
+    stroke: var(--artalk-custom-main);
+  }
+
+  80%, 90% {
+    stroke: var(--artalk-custom-darkgray);
+  }
+}
+
+/* 重写loading图标颜色 */
+.artalk .atk-loading-icon {
+  border-top-color: var(--artalk-custom-secondary) !important;
+  border-left-color: var(--artalk-custom-secondary) !important;
+}
+
+/* 适配loading状态的动画颜色 */
+.artalk .atk-list-read-more .atk-list-read-more-inner .atk-loading-icon {
+  border-top-color: var(--artalk-custom-secondary) !important;
+  border-left-color: var(--artalk-custom-secondary) !important;
+}
+
+/* 适配加载更多按钮的悬停效果 */
+.artalk .atk-list-read-more .atk-list-read-more-inner:hover {
+  background: var(--at-color-bg-grey);
+}
+
+/* 适配加载错误状态的颜色 */
+.artalk .atk-list-read-more.atk-err .atk-text {
+  color: var(--artalk-custom-darkgray) !important;
+}
+
+/* 覆盖Artalk暗色模式背景色，使用项目配色方案 */
+.artalk.atk-dark-mode, .atk-layer-wrap.atk-dark-mode {
+  --at-color-bg: var(--artalk-custom-light) !important; /* Artalk暗色模式下使用当前主题的背景色 */
+  --at-color-bg-transl: var(--artalk-custom-light) !important;
+}
+
+/* 覆盖Artalk浅色模式背景色，使用项目配色方案 */
+.artalk:not(.atk-dark-mode), .atk-layer-wrap:not(.atk-dark-mode) {
+  --at-color-bg: var(--artalk-custom-light) !important; /* Artalk浅色模式下使用当前主题的背景色 */
+  --at-color-bg-transl: var(--artalk-custom-light) !important;
+}
+
+/* 确保加载遮罩使用正确的背景色 */
+.artalk .atk-full-layer,
+.artalk .atk-loading {
+  background: var(--at-color-bg) !important;
+}
+
+/* 确保错误层使用正确的背景色 */
+.artalk .atk-error-layer {
+  background-color: var(--at-color-bg-transl) !important;
+}
+
+/* Artalk编辑器背景色和边框色，使用moreLight作为背景，lightgray作为边框 */
+.artalk .atk-main-editor {
+  background-color: var(--artalk-custom-morelight) !important;
+  border-color: var(--artalk-custom-lightgray) !important;
+}
+
+/* 在暗色模式下覆盖编辑器样式 */
+html[data-theme="dark"] .artalk .atk-main-editor {
+  background-color: var(--artalk-custom-morelight) !important;
+  border-color: var(--artalk-custom-lightgray) !important;
+}
+
+/* Artalk文本区域背景色，使用moreLight作为背景 */
+.artalk .atk-textarea-wrap {
+  background-color: var(--artalk-custom-morelight) !important;
+}
+
+/* Artalk文本输入框背景色，使用moreLight作为背景 */
+.artalk .atk-textarea-wrap .atk-textarea {
+  background-color: var(--artalk-custom-morelight) !important;
+}
+
+/* 在暗色模式下覆盖文本区域样式 */
+html[data-theme="dark"] .artalk .atk-textarea-wrap {
+  background-color: var(--artalk-custom-morelight) !important;
+}
+
+/* 在暗色模式下覆盖文本输入框样式 */
+html[data-theme="dark"] .artalk .atk-textarea-wrap .atk-textarea {
+  background-color: var(--artalk-custom-morelight) !important;
+}

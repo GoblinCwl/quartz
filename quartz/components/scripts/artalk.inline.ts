@@ -75,6 +75,9 @@ const tryLoadArtalk = () => {
     return;
   }
   
+  // 添加loading类以隐藏容器，避免FOUC
+  artalkContainer.classList.add("artalk-loading");
+  
   // 动态加载Artalk CSS
   const loadArtalkCSS = () => {
     return new Promise<void>((resolve) => {
@@ -99,10 +102,19 @@ const tryLoadArtalk = () => {
       
       // 等待CSS加载完成后再resolve
       link.onload = () => {
+        // 确保浏览器完成样式计算后再显示容器
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            // 两次raf确保样式完全应用
+            artalkContainer.classList.remove("artalk-loading");
+          });
+        });
         resolve();
       };
       
       link.onerror = () => {
+        // 即使CSS加载失败也显示容器，避免组件完全不显示
+        artalkContainer.classList.remove("artalk-loading");
         resolve(); // 即使出错也要resolve，不要阻塞后续流程
       };
       
