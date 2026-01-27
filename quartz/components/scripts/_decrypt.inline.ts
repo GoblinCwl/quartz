@@ -9,13 +9,14 @@ let salt: Uint8Array, iv: Uint8Array, ciphertext: Uint8Array, iterations: number
 let salt_toc: Uint8Array, iv_toc: Uint8Array, ciphertext_toc: Uint8Array, iterations_toc: number
 const subtle = window.crypto?.subtle || (window.crypto as any)?.webkitSubtle
 
-let pl: HTMLPreElement,pl_toc: HTMLPreElement, form: HTMLFormElement, pwd: HTMLInputElement, load: HTMLDivElement,
-    loadText: HTMLElement, lock: HTMLDivElement, msg: HTMLParagraphElement, article: HTMLElement,article_graph: HTMLElement
+let pl: HTMLPreElement,pl_toc: HTMLPreElement, form: HTMLFormElement, pwd: HTMLInputElement,
+    loadText: HTMLElement, lock: HTMLDivElement, msg: HTMLParagraphElement, article: HTMLElement,
+    article_graph: HTMLElement
 
-const slug = document.body.dataset.slug!
 async function decryptHTML() {
-  pl = find("#encrypted-content"); form = find("form"); pwd = find(".pwd"); load = find("#load")
-  loadText = find("#load-text"); lock = find("#lock"); msg = find("#msg"); article = find("#content")
+  pl = find("#encrypted-content");
+  form = find("form");
+  pwd = find(".pwd");  loadText = find("#load-text"); lock = find("#lock"); msg = find("#msg"); article = find("#content")
   pl_toc = find("#encrypted-toc"); article_graph = find(".graph")
 
   if (!pl || !form || !pwd) return
@@ -40,21 +41,22 @@ async function decryptHTML() {
     history.replaceState(null, "", url)
   }
 
+  const slug = document.body.dataset.slug!
   const hasContentKey = sessionStorage[`${slug}_content`]
   const hasTocKey = sessionStorage[`${slug}_toc`]
 
 // 如果两个密钥都有，或者有密码，就自动解密
 // 如果只有一个密钥，可能有问题（比如刷新后只解密了一半）
-  if ((hasContentKey && hasTocKey) || pwd.value) {
+  if (hasContentKey && hasTocKey) {
     decrypt()
   } else if (hasContentKey || hasTocKey) {
     // 只有一个密钥，可能是之前版本留下的，清除后让用户重新输入
     console.log('检测到不完整的密钥状态，清除后重新输入')
     sessionStorage.removeItem(`${slug}_content`)
     sessionStorage.removeItem(`${slug}_toc`)
-    hide(load); show(form); pwd.focus()
+    show(lock)
   } else {
-    hide(load); show(form); pwd.focus()
+    show(lock)
   }
 }
 
@@ -116,6 +118,7 @@ async function decrypt() {
       ;(window as any).decryptedContentObserver = tempObserver;
     }, 10)
   } catch (e) {
+    const slug = document.body.dataset.slug!
     if (sessionStorage[`${slug}_content`] || sessionStorage[`${slug}_toc`]) {
       sessionStorage.removeItem(`${slug}_content`)
       sessionStorage.removeItem(`${slug}_toc`)
@@ -148,6 +151,7 @@ async function decryptFile({ salt, iv, ciphertext, iterations }: {
   salt: Uint8Array, iv: Uint8Array, ciphertext: Uint8Array, iterations: number
 }, password: string) {
   const decoder = new TextDecoder()
+  const slug = document.body.dataset.slug!
   const key = sessionStorage[`${slug}_content`]
     ? await importKey(JSON.parse(sessionStorage[`${slug}_content`]))
     : await deriveKey(salt, password, iterations)
@@ -163,6 +167,7 @@ async function decryptFile_toc({ salt_toc, iv_toc, ciphertext_toc, iterations_to
   salt_toc: Uint8Array, iv_toc: Uint8Array, ciphertext_toc: Uint8Array, iterations_toc: number
 }, password: string) {
   const decoder = new TextDecoder()
+  const slug = document.body.dataset.slug!
   const key = sessionStorage[`${slug}_toc`]
       ? await importKey(JSON.parse(sessionStorage[`${slug}_toc`]))
       : await deriveKey(salt_toc, password, iterations_toc)

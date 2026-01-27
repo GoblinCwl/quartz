@@ -20,7 +20,7 @@ const EncryptedContent: QuartzComponent = (props: QuartzComponentProps) => {
                         {i18n(cfg.locale).pages.encryptedContent.loading}
                     </p>
                 </div>
-                <form class="hidden">
+                <form id="lockForm">
                     <input
                         type="password"
                         class="pwd"
