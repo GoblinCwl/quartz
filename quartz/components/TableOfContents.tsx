@@ -31,8 +31,11 @@ export default ((opts?: Partial<Options>) => {
     }
 
     const id = `toc-${numTocs++}`
-    // 如果页面加密（frontmatter中有passphrase），则添加hidden类
     const isEncrypted = cfg.passProtected?.enabled && fileData.frontmatter?.passphrase
+
+    if (isEncrypted) {
+      return null
+    }
 
     return (
       <div class={classNames(displayClass, "toc")}>
@@ -60,8 +63,7 @@ export default ((opts?: Partial<Options>) => {
         </button>
         <OverflowList
           id={id}
-          class={`${fileData.collapseToc ? "collapsed " : ""}toc-content ${isEncrypted ? "hidden" : ""}`}
-        >
+          class={`${fileData.collapseToc ? "collapsed " : ""}toc-content`}>
           {fileData.toc.map((tocEntry) => (
             <li key={tocEntry.slug} class={`depth-${tocEntry.depth}`}>
               <a href={`#${tocEntry.slug}`} data-for={tocEntry.slug}>
@@ -81,6 +83,24 @@ export default ((opts?: Partial<Options>) => {
     if (!fileData.toc) {
       return null
     }
+    // 对于旧版目录也应用相同逻辑
+    const isEncrypted = cfg.passProtected?.enabled && fileData.frontmatter?.passphrase
+    
+    if (isEncrypted) {
+      // 对于加密页面，渲染目录的基本结构，但不包含内容
+      // 这样解密后的目录可以插入到正确的位置
+      return (
+        <details class="toc" open={!fileData.collapseToc}>
+          <summary>
+            <h3>{i18n(cfg.locale).components.tableOfContents.title}</h3>
+          </summary>
+          <ul>
+            {/* 不渲染任何目录条目，保持内容为空 */}
+          </ul>
+        </details>
+      );
+    }
+    
     return (
       <details class="toc" open={!fileData.collapseToc}>
         <summary>

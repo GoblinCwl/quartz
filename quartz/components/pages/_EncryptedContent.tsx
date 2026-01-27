@@ -1,7 +1,8 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
 import { i18n } from "../../i18n"
 
-const EncryptedContent: QuartzComponent = ({ encryptedContent, cfg }: QuartzComponentProps) => {
+const EncryptedContent: QuartzComponent = (props: QuartzComponentProps) => {
+    const { encryptedContent, encryptedToc, cfg } = props;
     return (
         <>
             <div id="lock">
@@ -30,9 +31,12 @@ const EncryptedContent: QuartzComponent = ({ encryptedContent, cfg }: QuartzComp
                     />
                     <input type="submit" value={i18n(cfg.locale).pages.encryptedContent.submit} />
                 </form>
-                <pre class="hidden" data-i={cfg.passProtected?.iteration}>
-          {encryptedContent}
-        </pre>
+                <pre class="hidden" data-i={cfg.passProtected?.iteration} id = "encrypted-content">
+                    {encryptedContent}
+                </pre>
+                <pre class="hidden" data-i={cfg.passProtected?.iteration} id="encrypted-toc">
+                    {encryptedToc}
+                </pre>
             </div>
             <article id="content"></article>
         </>

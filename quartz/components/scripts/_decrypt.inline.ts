@@ -1,4 +1,4 @@
-import { base64 } from "rfc4648"
+import {base64} from "rfc4648"
 
 // @ts-ignore:next-line
 function find<T>(selector: string): T {
@@ -6,14 +6,17 @@ function find<T>(selector: string): T {
 }
 
 let salt: Uint8Array, iv: Uint8Array, ciphertext: Uint8Array, iterations: number
+let salt_toc: Uint8Array, iv_toc: Uint8Array, ciphertext_toc: Uint8Array, iterations_toc: number
 const subtle = window.crypto?.subtle || (window.crypto as any)?.webkitSubtle
 
-let pl: HTMLPreElement, form: HTMLFormElement, pwd: HTMLInputElement, load: HTMLDivElement,
-    loadText: HTMLElement, lock: HTMLDivElement, msg: HTMLParagraphElement, article: HTMLElement
+let pl: HTMLPreElement,pl_toc: HTMLPreElement, form: HTMLFormElement, pwd: HTMLInputElement, load: HTMLDivElement,
+    loadText: HTMLElement, lock: HTMLDivElement, msg: HTMLParagraphElement, article: HTMLElement,article_graph: HTMLElement
 
+const slug = document.body.dataset.slug!
 async function decryptHTML() {
-  pl = find("pre[data-i]"); form = find("form"); pwd = find(".pwd"); load = find("#load")
+  pl = find("#encrypted-content"); form = find("form"); pwd = find(".pwd"); load = find("#load")
   loadText = find("#load-text"); lock = find("#lock"); msg = find("#msg"); article = find("#content")
+  pl_toc = find("#encrypted-toc"); article_graph = find(".graph")
 
   if (!pl || !form || !pwd) return
   pwd.value = ""
@@ -25,8 +28,11 @@ async function decryptHTML() {
   form.addEventListener("submit", (event) => { event.preventDefault(); decrypt() })
 
   iterations = Number(pl.dataset.i)
+  iterations_toc = Number(pl_toc.dataset.i)
   const bytes = base64.parse(pl.innerHTML)
   salt = bytes.slice(0, 32); iv = bytes.slice(32, 48); ciphertext = bytes.slice(48)
+  const bytes_toc = base64.parse(pl_toc.innerHTML)
+  salt_toc = bytes_toc.slice(0, 32); iv_toc = bytes_toc.slice(32, 48); ciphertext_toc = bytes_toc.slice(48)
 
   if (location.hash) {
     const [url, hash] = location.href.split("#")
@@ -34,8 +40,19 @@ async function decryptHTML() {
     history.replaceState(null, "", url)
   }
 
-  if (sessionStorage[document.body.dataset.slug!] || pwd.value) {
+  const hasContentKey = sessionStorage[`${slug}_content`]
+  const hasTocKey = sessionStorage[`${slug}_toc`]
+
+// 如果两个密钥都有，或者有密码，就自动解密
+// 如果只有一个密钥，可能有问题（比如刷新后只解密了一半）
+  if ((hasContentKey && hasTocKey) || pwd.value) {
     decrypt()
+  } else if (hasContentKey || hasTocKey) {
+    // 只有一个密钥，可能是之前版本留下的，清除后让用户重新输入
+    console.log('检测到不完整的密钥状态，清除后重新输入')
+    sessionStorage.removeItem(`${slug}_content`)
+    sessionStorage.removeItem(`${slug}_toc`)
+    hide(load); show(form); pwd.focus()
   } else {
     hide(load); show(form); pwd.focus()
   }
@@ -63,23 +80,16 @@ function error(code: string) {
 async function decrypt() {
   const submitBtn = form.querySelector('input[type="submit"]') as HTMLInputElement
   const originalText = submitBtn.value
-  
+
   submitBtn.disabled = true
   submitBtn.value = loadText.getAttribute("data-decrypt") || "解密中..."
 
   try {
-    const decrypted = await decryptFile({ salt, iv, ciphertext, iterations }, pwd.value)
-    article.innerHTML = decrypted
     hide(lock)
-    
-    // 解密成功后，显示目录内容
-    const tocContentElements = document.getElementsByClassName("toc-content overflow")
-    for (let i = 0; i < tocContentElements.length; i++) {
-      if (tocContentElements[i] instanceof HTMLElement) {
-        tocContentElements[i].classList.remove("hidden")
-      }
-    }
-    
+
+    article.innerHTML = await decryptFile({salt, iv, ciphertext, iterations}, pwd.value)
+    article_graph.insertAdjacentHTML("afterend",await decryptFile_toc({salt_toc, iv_toc, ciphertext_toc, iterations_toc}, pwd.value))
+
     // 重新初始化目录的滚动监听功能，但要小心避免无限循环
     setTimeout(() => {
       // 创建一个临时的IntersectionObserver来处理解密后的内容
@@ -97,22 +107,24 @@ async function decrypt() {
           }
         }
       })
-      
+
       // 观察解密后内容中的标题元素
       const headers = document.querySelectorAll("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]")
       headers.forEach((header) => tempObserver.observe(header))
-      
+
       // 将临时observer赋值给全局变量，以便在需要时可以断开连接
       ;(window as any).decryptedContentObserver = tempObserver;
     }, 10)
   } catch (e) {
-    if (sessionStorage[document.body.dataset.slug!]) {
-      sessionStorage.removeItem(document.body.dataset.slug!)
+    if (sessionStorage[`${slug}_content`] || sessionStorage[`${slug}_toc`]) {
+      sessionStorage.removeItem(`${slug}_content`)
+      sessionStorage.removeItem(`${slug}_toc`)
     } else {
       error("wrong")
     }
     pwd.value = ""
     pwd.focus()
+    console.error(e)
   } finally {
     submitBtn.disabled = false
     submitBtn.value = originalText
@@ -136,14 +148,28 @@ async function decryptFile({ salt, iv, ciphertext, iterations }: {
   salt: Uint8Array, iv: Uint8Array, ciphertext: Uint8Array, iterations: number
 }, password: string) {
   const decoder = new TextDecoder()
-  const slug = document.body.dataset.slug!
-  const key = sessionStorage[slug] 
-    ? await importKey(JSON.parse(sessionStorage[slug]))
+  const key = sessionStorage[`${slug}_content`]
+    ? await importKey(JSON.parse(sessionStorage[`${slug}_content`]))
     : await deriveKey(salt, password, iterations)
 
   const data = new Uint8Array(await subtle.decrypt({ name: "AES-GCM", iv }, key, ciphertext))
   if (!data) throw "Malformed data"
 
-  sessionStorage[slug] = JSON.stringify(await subtle.exportKey("jwk", key))
+  sessionStorage[`${slug}_content`] = JSON.stringify(await subtle.exportKey("jwk", key))
+  return decoder.decode(data)
+}
+
+async function decryptFile_toc({ salt_toc, iv_toc, ciphertext_toc, iterations_toc }: {
+  salt_toc: Uint8Array, iv_toc: Uint8Array, ciphertext_toc: Uint8Array, iterations_toc: number
+}, password: string) {
+  const decoder = new TextDecoder()
+  const key = sessionStorage[`${slug}_toc`]
+      ? await importKey(JSON.parse(sessionStorage[`${slug}_toc`]))
+      : await deriveKey(salt_toc, password, iterations_toc)
+
+  const data = new Uint8Array(await subtle.decrypt({ name: "AES-GCM", iv:iv_toc }, key, ciphertext_toc))
+  if (!data) throw "Malformed data"
+
+  sessionStorage[`${slug}_toc`] = JSON.stringify(await subtle.exportKey("jwk", key))
   return decoder.decode(data)
 }

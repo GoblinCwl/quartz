@@ -23,6 +23,7 @@ export type QuartzComponent = ComponentType<QuartzComponentProps> & {
   beforeDOMLoaded?: StringResource
   afterDOMLoaded?: StringResource
   encryptedContent?: string
+  encryptedToc?: string
 }
 
 export type QuartzComponentConstructor<Options extends object | undefined = undefined> = (
