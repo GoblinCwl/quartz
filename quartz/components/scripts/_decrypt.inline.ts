@@ -122,9 +122,8 @@ async function decrypt() {
     if (sessionStorage[`${slug}_content`] || sessionStorage[`${slug}_toc`]) {
       sessionStorage.removeItem(`${slug}_content`)
       sessionStorage.removeItem(`${slug}_toc`)
-    } else {
-      error("wrong")
     }
+    show(lock)
     pwd.value = ""
     pwd.focus()
     console.error(e)
