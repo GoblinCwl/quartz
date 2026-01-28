@@ -1,0 +1,83 @@
+/* 纯净模式样式 */
+
+/* 当页面处于纯净模式时应用的样式 */
+body.pure-mode {
+  /* 隐藏左侧面板 */
+  .sidebar.left {
+    display: none !important;
+  }
+
+  /* 隐藏面包屑导航 */
+  .breadcrumb-container {
+    display: none !important;
+  }
+
+  /* 隐藏页脚中的常规内容（保留纯净模式页脚） */
+  footer > :not(.pure-mode-footer) {
+    display: none !important;
+  }
+
+  /* 隐藏关系图谱 */
+  .graph {
+    display: none !important;
+  }
+  
+  /* 调整页面布局以适应缺少左边栏的情况 */
+  .page #quartz-body {
+    /* 桌面布局：移除左侧边栏，让中间内容居中 */
+    @media (min-width: 1200px) {
+      grid-template-columns: 1fr 3fr 1fr; /* 左侧（隐藏）- 中间内容 - 右侧边栏 */
+      
+      .center {
+        grid-area: grid-center;
+        margin: 0 auto; /* 居中对齐 */
+        max-width: 100%; /* 确保不超过容器宽度 */
+      }
+      
+      .sidebar.right {
+        grid-area: grid-sidebar-right;
+      }
+      
+      footer {
+        grid-area: grid-footer;
+      }
+    }
+    
+    /* 平板布局：移除左侧边栏 */
+    @media (min-width: 800px) and (max-width: 1200px) {
+      grid-template-columns: 1fr 3fr 1fr; /* 左侧（隐藏）- 中间内容 - 右侧边栏 */
+      
+      .center {
+        grid-area: grid-center;
+        margin: 0 auto; /* 居中对齐 */
+      }
+      
+      .sidebar.right {
+        grid-area: grid-sidebar-right;
+      }
+      
+      footer {
+        grid-area: grid-footer;
+      }
+    }
+    
+    /* 移动布局：保持单列布局 */
+    @media (max-width: 800px) {
+      /* 移动设备上保持原有单列布局，只需隐藏左侧边栏即可 */
+    }
+  }
+}
+
+/* 纯净模式页脚样式 */
+.pure-mode-footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  width: 100%;
+  
+  a {
+    font-weight: normal;
+    color: var(--secondary);
+    text-decoration: underline;
+  }
+}
