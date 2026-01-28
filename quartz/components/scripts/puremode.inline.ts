@@ -1,6 +1,3 @@
-// 在页面加载时检测URL参数中的pure=true，并应用纯净模式
-// 同时监听浏览器前进/后退事件以处理SPA导航
-
 (function checkPureMode() {
   function applyPureMode() {
     const urlParams = new URLSearchParams(window.location.search)
