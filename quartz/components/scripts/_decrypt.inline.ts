@@ -149,6 +149,7 @@ async function deriveKey(salt: Uint8Array, password: string, iterations: number)
   const encoder = new TextEncoder()
   const baseKey = await subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveKey"])
   return await subtle.deriveKey(
+      // @ts-ignore
     { name: "PBKDF2", salt, iterations, hash: "SHA-256" },
     baseKey, { name: "AES-GCM", length: 256 }, true, ["decrypt"]
   )
@@ -167,6 +168,7 @@ async function decryptFile({ salt, iv, ciphertext, iterations }: {
     ? await importKey(JSON.parse(sessionStorage[`${slug}_content`]))
     : await deriveKey(salt, password, iterations)
 
+  // @ts-ignore
   const data = new Uint8Array(await subtle.decrypt({ name: "AES-GCM", iv }, key, ciphertext))
   if (!data) throw "Malformed data"
 
@@ -183,6 +185,7 @@ async function decryptFile_toc({ salt_toc, iv_toc, ciphertext_toc, iterations_to
       ? await importKey(JSON.parse(sessionStorage[`${slug}_toc`]))
       : await deriveKey(salt_toc, password, iterations_toc)
 
+  // @ts-ignore
   const data = new Uint8Array(await subtle.decrypt({ name: "AES-GCM", iv:iv_toc }, key, ciphertext_toc))
   if (!data) throw "Malformed data"
 

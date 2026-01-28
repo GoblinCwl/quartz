@@ -86,6 +86,7 @@ const tryLoadArtalk = () => {
       
       // 检查是否已经加载了相同的CSS
       const existingLink = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+          // @ts-ignore
         .find((link: HTMLLinkElement) => link.href === cssUrl) as HTMLLinkElement;
         
       if (existingLink) {

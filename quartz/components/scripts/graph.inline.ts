@@ -483,6 +483,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
           if (Date.now() - dragStartTime < 500) {
             const node = graphData.nodes.find((n) => n.id === event.subject.id) as NodeData
             const targ = resolveRelative(fullSlug, node.id)
+            // @ts-ignore
             window.spaNavigate(new URL(targ, window.location.toString()))
           }
         }),
@@ -491,6 +492,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     for (const node of nodeRenderData) {
       node.gfx.on("click", () => {
         const targ = resolveRelative(fullSlug, node.simulationData.id)
+        // @ts-ignore
         window.spaNavigate(new URL(targ, window.location.toString()))
       })
     }
@@ -573,6 +575,7 @@ function cleanupGlobalGraphs() {
   globalGraphCleanups = []
 }
 
+// @ts-ignore
 document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   const slug = e.detail.url
   addToVisited(simplifySlug(slug))
@@ -591,6 +594,7 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   }
 
   document.addEventListener("themechange", handleThemeChange)
+  // @ts-ignore
   window.addCleanup(() => {
     document.removeEventListener("themechange", handleThemeChange)
   })
@@ -637,10 +641,12 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   const containerIcons = document.getElementsByClassName("global-graph-icon")
   Array.from(containerIcons).forEach((icon) => {
     icon.addEventListener("click", renderGlobalGraph)
+    // @ts-ignore
     window.addCleanup(() => icon.removeEventListener("click", renderGlobalGraph))
   })
 
   document.addEventListener("keydown", shortcutHandler)
+  // @ts-ignore
   window.addCleanup(() => {
     document.removeEventListener("keydown", shortcutHandler)
     cleanupLocalGraphs()

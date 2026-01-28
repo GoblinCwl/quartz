@@ -238,6 +238,7 @@ async function setupExplorer(currentSlug: FullSlug) {
     ) as HTMLCollectionOf<HTMLElement>
     for (const button of explorerButtons) {
       button.addEventListener("click", toggleExplorer)
+      // @ts-ignore
       window.addCleanup(() => button.removeEventListener("click", toggleExplorer))
     }
 
@@ -248,6 +249,7 @@ async function setupExplorer(currentSlug: FullSlug) {
       ) as HTMLCollectionOf<HTMLElement>
       for (const button of folderButtons) {
         button.addEventListener("click", toggleFolder)
+        // @ts-ignore
         window.addCleanup(() => button.removeEventListener("click", toggleFolder))
       }
     }
@@ -257,6 +259,7 @@ async function setupExplorer(currentSlug: FullSlug) {
     ) as HTMLCollectionOf<HTMLElement>
     for (const icon of folderIcons) {
       icon.addEventListener("click", toggleFolder)
+      // @ts-ignore
       window.addCleanup(() => icon.removeEventListener("click", toggleFolder))
     }
   }
@@ -269,6 +272,7 @@ document.addEventListener("prenav", async () => {
   sessionStorage.setItem("explorerScrollTop", explorer.scrollTop.toString())
 })
 
+// @ts-ignore
 document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   const currentSlug = e.detail.url
   await setupExplorer(currentSlug)

@@ -15,6 +15,7 @@ document.addEventListener("nav", () => {
     }
 
     el.addEventListener("change", switchState)
+    // @ts-ignore
     window.addCleanup(() => el.removeEventListener("change", switchState))
     if (localStorage.getItem(elId) === "true") {
       el.checked = true

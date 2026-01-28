@@ -366,8 +366,10 @@ async function setupSearch(searchElement: Element, currentSlug: FullSlug, data: 
     }
 
     itemTile.addEventListener("mouseenter", onMouseEnter)
+    // @ts-ignore
     window.addCleanup(() => itemTile.removeEventListener("mouseenter", onMouseEnter))
     itemTile.addEventListener("click", handler)
+    // @ts-ignore
     window.addCleanup(() => itemTile.removeEventListener("click", handler))
 
     return itemTile
@@ -494,10 +496,13 @@ async function setupSearch(searchElement: Element, currentSlug: FullSlug, data: 
   }
 
   document.addEventListener("keydown", shortcutHandler)
+  // @ts-ignore
   window.addCleanup(() => document.removeEventListener("keydown", shortcutHandler))
   searchButton.addEventListener("click", () => showSearch("basic"))
+  // @ts-ignore
   window.addCleanup(() => searchButton.removeEventListener("click", () => showSearch("basic")))
   searchBar.addEventListener("input", onType)
+  // @ts-ignore
   window.addCleanup(() => searchBar.removeEventListener("input", onType))
 
   registerEscapeHandler(container, hideSearch)
@@ -530,6 +535,7 @@ async function fillDocument(data: ContentIndex) {
   indexPopulated = true
 }
 
+// @ts-ignore
 document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   const currentSlug = e.detail.url
   const data = await fetchData

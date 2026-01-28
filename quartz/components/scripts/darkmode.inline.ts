@@ -27,11 +27,13 @@ document.addEventListener("nav", () => {
 
   for (const darkmodeButton of document.getElementsByClassName("darkmode")) {
     darkmodeButton.addEventListener("click", switchTheme)
+    // @ts-ignore
     window.addCleanup(() => darkmodeButton.removeEventListener("click", switchTheme))
   }
 
   // Listen for changes in prefers-color-scheme
   const colorSchemeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
   colorSchemeMediaQuery.addEventListener("change", themeChange)
+  // @ts-ignore
   window.addCleanup(() => colorSchemeMediaQuery.removeEventListener("change", themeChange))
 })

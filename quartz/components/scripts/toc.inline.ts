@@ -30,6 +30,7 @@ function setupToc() {
     const content = toc.querySelector(".toc-content")
     if (!button || !content) return
     button.addEventListener("click", toggleToc)
+    // @ts-ignore
     window.addCleanup(() => button.removeEventListener("click", toggleToc))
   }
 }

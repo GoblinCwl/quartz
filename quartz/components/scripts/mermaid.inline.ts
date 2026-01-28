@@ -85,6 +85,7 @@ class DiagramPanZoom {
     button.textContent = text
     button.className = "mermaid-control-button"
     button.addEventListener("click", onClick)
+    // @ts-ignore
     window.addCleanup(() => button.removeEventListener("click", onClick))
     return button
   }
@@ -242,6 +243,7 @@ document.addEventListener("nav", async () => {
 
   await renderMermaid()
   document.addEventListener("themechange", renderMermaid)
+  // @ts-ignore
   window.addCleanup(() => document.removeEventListener("themechange", renderMermaid))
 
   for (let i = 0; i < nodes.length; i++) {
@@ -292,6 +294,7 @@ document.addEventListener("nav", async () => {
     expandBtn.addEventListener("click", showMermaid)
     registerEscapeHandler(popupContainer, hideMermaid)
 
+    // @ts-ignore
     window.addCleanup(() => {
       panZoom?.cleanup()
       expandBtn.removeEventListener("click", showMermaid)

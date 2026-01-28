@@ -14,8 +14,10 @@ export function registerEscapeHandler(outsideContainer: HTMLElement | null, cb: 
   }
 
   outsideContainer?.addEventListener("click", click)
+  // @ts-ignore
   window.addCleanup(() => outsideContainer?.removeEventListener("click", click))
   document.addEventListener("keydown", esc)
+  // @ts-ignore
   window.addCleanup(() => document.removeEventListener("keydown", esc))
 }
 

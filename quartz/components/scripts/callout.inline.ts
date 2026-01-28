@@ -17,6 +17,7 @@ function setupCallout() {
     if (!title || !content) continue
 
     title.addEventListener("click", toggleCallout)
+    // @ts-ignore
     window.addCleanup(() => title.removeEventListener("click", toggleCallout))
 
     const collapsed = div.classList.contains("is-collapsed")

@@ -30,6 +30,7 @@ document.addEventListener("nav", () => {
         )
       }
       button.addEventListener("click", onClick)
+      // @ts-ignore
       window.addCleanup(() => button.removeEventListener("click", onClick))
       els[i].prepend(button)
     }

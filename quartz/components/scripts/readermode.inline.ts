@@ -17,6 +17,7 @@ document.addEventListener("nav", () => {
 
   for (const readerModeButton of document.getElementsByClassName("readermode")) {
     readerModeButton.addEventListener("click", switchReaderMode)
+    // @ts-ignore
     window.addCleanup(() => readerModeButton.removeEventListener("click", switchReaderMode))
   }
 

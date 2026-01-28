@@ -41,6 +41,7 @@ function notifyNav(url: FullSlug) {
 }
 
 const cleanupFns: Set<(...args: any[]) => void> = new Set()
+// @ts-ignore
 window.addCleanup = (fn) => cleanupFns.add(fn)
 
 function startLoading() {
@@ -143,6 +144,7 @@ async function navigate(url: URL, isBack: boolean = false) {
   }
 }
 
+// @ts-ignore
 window.spaNavigate = navigate
 
 function createRouter() {
