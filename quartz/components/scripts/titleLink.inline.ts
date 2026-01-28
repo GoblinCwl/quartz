@@ -4,8 +4,8 @@ document.addEventListener("click", function(event) {
   if (target.classList.contains("title-link-button") || target.closest(".title-link-button")) {
     event.preventDefault();
     
-    const button = target.classList.contains("title-link-button") ? 
-      target : target.closest(".title-link-button");
+    const button = (target.classList.contains("title-link-button") ? 
+      target : target.closest(".title-link-button")) as HTMLElement;
     
     // 检查是否为纯净模式
     const isPureMode = new URLSearchParams(window.location.search).get('pure') === 'true';

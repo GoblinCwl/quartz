@@ -2,7 +2,6 @@ function setupScrollButtons() {
   const scrollTopBtn = document.getElementById("scroll-top")
   const scrollBottomBtn = document.getElementById("scroll-bottom")
   const themeToggleBtn = document.getElementById("theme-toggle")
-  const themeToggleIcon = document.getElementById("theme-toggle-icon")
 
   if (scrollTopBtn) {
     scrollTopBtn.addEventListener("click", () => {
@@ -56,7 +55,7 @@ function handleThemeToggle() {
   const existingDarkModeButtons = document.querySelectorAll('.darkmode');
   if (existingDarkModeButtons.length > 0) {
     // 如果有现有的暗色模式按钮，直接触发点击
-    existingDarkModeButtons[0].click();
+    (existingDarkModeButtons[0] as HTMLElement).click();
   } else {
     // 如果没有现有的暗色模式按钮，手动切换主题
     const currentTheme = document.documentElement.getAttribute("saved-theme")
@@ -83,7 +82,7 @@ function updateThemeIcon() {
   // 根据要求：深色时显示太阳（亮色模式图标），浅色时显示月亮（深色模式图标）
   if (currentTheme === "dark") {
     // 深色模式下显示太阳图标
-    themeToggleIcon.innerHTML = `
+    (themeToggleIcon as HTMLElement).innerHTML = `
       <circle cx="12" cy="12" r="5" fill="currentColor"></circle>
       <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"></line>
       <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"></line>
@@ -96,7 +95,7 @@ function updateThemeIcon() {
     `
   } else {
     // 浅色模式下显示月亮图标
-    themeToggleIcon.innerHTML = `
+    (themeToggleIcon as HTMLElement).innerHTML = `
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"></path>
     `
   }
