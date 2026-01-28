@@ -2,68 +2,68 @@ import { Translation } from "./definition"
 
 export default {
   propertyDefaults: {
-    title: "Bez nazwy",
+    title: "Bez tytułu",
     description: "Brak opisu",
   },
   components: {
     callout: {
       note: "Notatka",
       abstract: "Streszczenie",
-      info: "informacja",
+      info: "Informacja",
       todo: "Do zrobienia",
       tip: "Wskazówka",
-      success: "Zrobione",
+      success: "Powodzenie",
       question: "Pytanie",
       warning: "Ostrzeżenie",
-      failure: "Usterka",
-      danger: "Niebiezpieczeństwo",
-      bug: "Błąd w kodzie",
+      failure: "Niepowodzenie",
+      danger: "Niebezpieczeństwo",
+      bug: "Błąd",
       example: "Przykład",
       quote: "Cytat",
     },
     backlinks: {
       title: "Odnośniki zwrotne",
-      noBacklinksFound: "Brak połączeń zwrotnych",
+      noBacklinksFound: "Nie znaleziono odnośników zwrotnych",
     },
     themeToggle: {
-      lightMode: "Trzyb jasny",
+      lightMode: "Tryb jasny",
       darkMode: "Tryb ciemny",
     },
     readerMode: {
-      title: "Tryb czytania",
+      title: "Tryb czytelniczy",
     },
     explorer: {
-      title: "Przeglądaj",
+      title: "Eksplorator",
     },
     footer: {
-      createdWith: "Stworzone z użyciem",
+      createdWith: "Stworzone przy użyciu",
     },
     graph: {
-      title: "Graf",
+      title: "Widok grafu",
     },
     recentNotes: {
-      title: "Najnowsze notatki",
-      seeRemainingMore: ({ remaining }) => `Zobacz ${remaining} nastepnych →`,
+      title: "Ostatnie notatki",
+      seeRemainingMore: ({ remaining }) => `Zobacz ${remaining} więcej →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `Osadzone ${targetSlug}`,
-      linkToOriginal: "Łącze do oryginału",
+      transcludeOf: ({ targetSlug }) => `Osadzone z ${targetSlug}`,
+      linkToOriginal: "Link do oryginału",
     },
     search: {
-      title: "Szukaj",
-      searchBarPlaceholder: "Wpisz frazę wyszukiwania",
+      title: "Wyszukiwanie",
+      searchBarPlaceholder: "Wyszukaj coś",
     },
     tableOfContents: {
       title: "Spis treści",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => `${minutes} min. czytania `,
+      readingTime: ({ minutes }) => `${minutes} min czytania`,
     },
   },
   pages: {
     rss: {
-      recentNotes: "Najnowsze notatki",
-      lastFewNotes: ({ count }) => `Ostatnie ${count} notatek`,
+      recentNotes: "Ostatnie notatki",
+      lastFewNotes: ({ count }) => `Ostatnie ${count} notatki`,
     },
     error: {
       title: "Nie znaleziono",
@@ -73,15 +73,26 @@ export default {
     folderContent: {
       folder: "Folder",
       itemsUnderFolder: ({ count }) =>
-        count === 1 ? "W tym folderze jest 1 element." : `Elementów w folderze: ${count}.`,
+        count === 1 ? "1 element w tym folderze." : `${count} elementy(-ów) w tym folderze.`,
     },
     tagContent: {
-      tag: "Znacznik",
-      tagIndex: "Spis znaczników",
+      tag: "Tag",
+      tagIndex: "Indeks tagów",
       itemsUnderTag: ({ count }) =>
-        count === 1 ? "Oznaczony 1 element." : `Elementów z tym znacznikiem: ${count}.`,
-      showingFirst: ({ count }) => `Pokazuje ${count} pierwszych znaczników.`,
-      totalTags: ({ count }) => `Znalezionych wszystkich znaczników: ${count}.`,
+        count === 1 ? "1 element oznaczony tym tagiem." : `${count} elementy(-ów) oznaczonych tym tagiem.`,
+      showingFirst: ({ count }) => `Pokazuje pierwsze ${count} tagi(-ów).`,
+      totalTags: ({ count }) => `Łącznie znaleziono ${count} tag(i).`,
+    },
+    encryptedContent: {
+      loading: "Ładowanie 🔃",
+      password: "Hasło",
+      submit: "Zatwierdź",
+      enterPassword: "Ta strona jest zablokowana. Proszę wprowadzić hasło, aby ją odblokować:",
+      modernBrowser: "Proszę użyć nowoczesnej przeglądarki, aby odblokować tę stronę.",
+      wrongPassword: "Nieprawidłowe hasło. Proszę wprowadzić hasło:",
+      noPayload: "Brak zaszyfrowanej zawartości.",
+      decrypting: "Odszyfrowywanie...",
+      defaultDescription: "Ta strona jest zaszyfrowana.",
     },
   },
 } as const satisfies Translation

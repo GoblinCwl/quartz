@@ -66,9 +66,9 @@ export default {
       lastFewNotes: ({ count }) => `Les dernières ${count} notes`,
     },
     error: {
-      title: "Introuvable",
-      notFound: "Cette page est soit privée, soit elle n'existe pas.",
-      home: "Retour à la page d'accueil",
+      title: "Page Introuvable",
+      notFound: "Cette page est soit privée, soit inexistante.",
+      home: "Retour à la Page d'Accueil",
     },
     folderContent: {
       folder: "Dossier",
@@ -77,11 +77,22 @@ export default {
     },
     tagContent: {
       tag: "Étiquette",
-      tagIndex: "Index des étiquettes",
+      tagIndex: "Index des Étiquettes",
       itemsUnderTag: ({ count }) =>
         count === 1 ? "1 élément avec cette étiquette." : `${count} éléments avec cette étiquette.`,
       showingFirst: ({ count }) => `Affichage des premières ${count} étiquettes.`,
-      totalTags: ({ count }) => `Trouvé ${count} étiquettes au total.`,
+      totalTags: ({ count }) => `${count} étiquettes trouvées au total.`,
+    },
+    encryptedContent: {
+      loading: "Chargement 🔃",
+      password: "Mot de passe",
+      submit: "Soumettre",
+      enterPassword: "Cette page est verrouillée. Veuillez entrer le mot de passe pour déverrouiller:",
+      modernBrowser: "Veuillez utiliser un navigateur plus récent pour déverrouiller cette page.",
+      wrongPassword: "Mot de passe incorrect. Veuillez entrer le mot de passe:",
+      noPayload: "Aucune charge utile chiffrée.",
+      decrypting: "Déchiffrement...",
+      defaultDescription: "Cette page est chiffrée.",
     },
   },
 } as const satisfies Translation

@@ -3,27 +3,27 @@ import { Translation } from "./definition"
 export default {
   propertyDefaults: {
     title: "Sense títol",
-    description: "Sense descripció",
+    description: "Cap descripció proveïda",
   },
   components: {
     callout: {
       note: "Nota",
       abstract: "Resum",
       info: "Informació",
-      todo: "Per fer",
+      todo: "Pendent",
       tip: "Consell",
       success: "Èxit",
       question: "Pregunta",
       warning: "Advertència",
-      failure: "Fall",
+      failure: "Fallada",
       danger: "Perill",
       bug: "Error",
       example: "Exemple",
       quote: "Cita",
     },
     backlinks: {
-      title: "Retroenllaç",
-      noBacklinksFound: "No s'han trobat retroenllaços",
+      title: "Enllaços cap enrere",
+      noBacklinksFound: "No s'han trobat enllaços cap enrere",
     },
     themeToggle: {
       lightMode: "Mode clar",
@@ -39,11 +39,11 @@ export default {
       createdWith: "Creat amb",
     },
     graph: {
-      title: "Vista Gràfica",
+      title: "Vista de graf",
     },
     recentNotes: {
-      title: "Notes Recents",
-      seeRemainingMore: ({ remaining }) => `Vegi ${remaining} més →`,
+      title: "Notes recents",
+      seeRemainingMore: ({ remaining }) => `Veure ${remaining} més →`,
     },
     transcludes: {
       transcludeOf: ({ targetSlug }) => `Transcluit de ${targetSlug}`,
@@ -54,10 +54,10 @@ export default {
       searchBarPlaceholder: "Cerca alguna cosa",
     },
     tableOfContents: {
-      title: "Taula de Continguts",
+      title: "Taula de continguts",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => `Es llegeix en ${minutes} min`,
+      readingTime: ({ minutes }) => `${minutes} min de lectura`,
     },
   },
   pages: {
@@ -66,22 +66,33 @@ export default {
       lastFewNotes: ({ count }) => `Últimes ${count} notes`,
     },
     error: {
-      title: "No s'ha trobat.",
+      title: "No trobat",
       notFound: "Aquesta pàgina és privada o no existeix.",
-      home: "Torna a la pàgina principal",
+      home: "Tornar a la pàgina d'inici",
     },
     folderContent: {
       folder: "Carpeta",
       itemsUnderFolder: ({ count }) =>
-        count === 1 ? "1 article en aquesta carpeta." : `${count} articles en esta carpeta.`,
+        count === 1 ? "1 element en aquesta carpeta." : `${count} elements en aquesta carpeta.`,
     },
     tagContent: {
       tag: "Etiqueta",
-      tagIndex: "índex d'Etiquetes",
+      tagIndex: "Índex d'etiquetes",
       itemsUnderTag: ({ count }) =>
-        count === 1 ? "1 article amb aquesta etiqueta." : `${count} article amb aquesta etiqueta.`,
+        count === 1 ? "1 element amb aquesta etiqueta." : `${count} elements amb aquesta etiqueta.`,
       showingFirst: ({ count }) => `Mostrant les primeres ${count} etiquetes.`,
       totalTags: ({ count }) => `S'han trobat ${count} etiquetes en total.`,
+    },
+    encryptedContent: {
+      loading: "Carregant 🔃",
+      password: "Contrasenya",
+      submit: "Enviar",
+      enterPassword: "Aquesta pàgina està bloquejada. Si us plau, introdueix la contrasenya per desbloquejar:",
+      modernBrowser: "Si us plau, utilitza un navegador més modern per desbloquejar aquesta pàgina.",
+      wrongPassword: "Contrasenya incorrecta. Si us plau, introdueix la contrasenya:",
+      noPayload: "No hi ha contingut xifrat.",
+      decrypting: "Desxifrant...",
+      defaultDescription: "Aquesta pàgina està xifrada.",
     },
   },
 } as const satisfies Translation

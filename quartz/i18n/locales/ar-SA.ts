@@ -2,17 +2,17 @@ import { Translation } from "./definition"
 
 export default {
   propertyDefaults: {
-    title: "غير معنون",
-    description: "لم يتم تقديم أي وصف",
+    title: "بدون عنوان",
+    description: "لا يوجد وصف",
   },
-  direction: "rtl" as const,
+  direction: "rtl",
   components: {
     callout: {
       note: "ملاحظة",
       abstract: "ملخص",
       info: "معلومات",
       todo: "للقيام",
-      tip: "نصيحة",
+      tip: "تلميح",
       success: "نجاح",
       question: "سؤال",
       warning: "تحذير",
@@ -23,71 +23,77 @@ export default {
       quote: "اقتباس",
     },
     backlinks: {
-      title: "وصلات العودة",
-      noBacklinksFound: "لا يوجد وصلات عودة",
+      title: "الروابط العكسية",
+      noBacklinksFound: "لا توجد روابط عكسية",
     },
     themeToggle: {
       lightMode: "الوضع النهاري",
       darkMode: "الوضع الليلي",
     },
-    explorer: {
-      title: "المستعرض",
-    },
     readerMode: {
       title: "وضع القارئ",
     },
+    explorer: {
+      title: "المستعرض",
+    },
     footer: {
-      createdWith: "أُنشئ باستخدام",
+      createdWith: "تم إنشاؤه باستخدام",
     },
     graph: {
-      title: "التمثيل التفاعلي",
+      title: "عرض المخطط",
     },
     recentNotes: {
-      title: "آخر الملاحظات",
-      seeRemainingMore: ({ remaining }) => `تصفح ${remaining} أكثر →`,
+      title: "الملاحظات الحديثة",
+      seeRemainingMore: ({ remaining }) => `عرض ${remaining} أكثر ←`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `مقتبس من ${targetSlug}`,
-      linkToOriginal: "وصلة للملاحظة الرئيسة",
+      transcludeOf: ({ targetSlug }) => `تضمين لـ ${targetSlug}`,
+      linkToOriginal: "رابط إلى الأصل",
     },
     search: {
-      title: "بحث",
+      title: "البحث",
       searchBarPlaceholder: "ابحث عن شيء ما",
     },
     tableOfContents: {
-      title: "فهرس المحتويات",
+      title: "جدول المحتويات",
     },
     contentMeta: {
-      readingTime: ({ minutes }) =>
-        minutes == 1
-          ? `دقيقة أو أقل للقراءة`
-          : minutes == 2
-            ? `دقيقتان للقراءة`
-            : `${minutes} دقائق للقراءة`,
+      readingTime: ({ minutes }) => `قراءة تامة خلال ${minutes} دقيقة`,
     },
   },
   pages: {
     rss: {
-      recentNotes: "آخر الملاحظات",
-      lastFewNotes: ({ count }) => `آخر ${count} ملاحظة`,
+      recentNotes: "الملاحظات الحديثة",
+      lastFewNotes: ({ count }) => `آخر ${count} ملاحظات`,
     },
     error: {
       title: "غير موجود",
-      notFound: "إما أن هذه الصفحة خاصة أو غير موجودة.",
-      home: "العوده للصفحة الرئيسية",
+      notFound: "إما أن تكون هذه الصفحة خاصة أو غير موجودة.",
+      home: "العودة إلى الصفحة الرئيسية",
     },
     folderContent: {
       folder: "مجلد",
       itemsUnderFolder: ({ count }) =>
-        count === 1 ? "يوجد عنصر واحد فقط تحت هذا المجلد" : `يوجد ${count} عناصر تحت هذا المجلد.`,
+        count === 1 ? "يوجد عنصر واحد ضمن هذا المجلد." : `يوجد ${count} عناصر ضمن هذا المجلد.`,
     },
     tagContent: {
-      tag: "الوسم",
-      tagIndex: "مؤشر الوسم",
+      tag: "وسم",
+      tagIndex: "فهرس الوسوم",
       itemsUnderTag: ({ count }) =>
-        count === 1 ? "يوجد عنصر واحد فقط تحت هذا الوسم" : `يوجد ${count} عناصر تحت هذا الوسم.`,
-      showingFirst: ({ count }) => `إظهار أول ${count} أوسمة.`,
-      totalTags: ({ count }) => `يوجد ${count} أوسمة.`,
+        count === 1 ? "يوجد عنصر واحد موسوم بهذا." : `يوجد ${count} عناصر موسومة بهذا.`,
+      showingFirst: ({ count }) => `عرض أول ${count} أوسمة.`,
+      totalTags: ({ count }) => `إجمالي ${count} أوسمة.`,
+    },
+    encryptedContent: {
+      loading: "جارٍ التحميل 🔃",
+      password: "كلمة المرور",
+      submit: "إرسال",
+      enterPassword: "هذه الصفحة مؤمنة. يرجى إدخال كلمة المرور لفتحها:",
+      modernBrowser: "يرجى استخدام متصفح أحدث لتمكين فتح هذه الصفحة.",
+      wrongPassword: "كلمة مرور خاطئة. يرجى إدخال كلمة المرور:",
+      noPayload: "لا توجد بيانات مشفرة.",
+      decrypting: "جاري فك التشفير...",
+      defaultDescription: "هذه الصفحة مشفرة.",
     },
   },
 } as const satisfies Translation

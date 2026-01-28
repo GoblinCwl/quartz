@@ -2,35 +2,35 @@ import { Translation } from "./definition"
 
 export default {
   propertyDefaults: {
-    title: "Tanpa Judul",
-    description: "Tidak ada deskripsi",
+    title: "Tanpa judul",
+    description: "Tidak ada deskripsi yang disediakan",
   },
   components: {
     callout: {
       note: "Catatan",
       abstract: "Abstrak",
       info: "Info",
-      todo: "Daftar Tugas",
-      tip: "Tips",
+      todo: "Yang harus dilakukan",
+      tip: "Kiat",
       success: "Berhasil",
       question: "Pertanyaan",
       warning: "Peringatan",
-      failure: "Gagal",
+      failure: "Kegagalan",
       danger: "Bahaya",
       bug: "Bug",
       example: "Contoh",
       quote: "Kutipan",
     },
     backlinks: {
-      title: "Tautan Balik",
-      noBacklinksFound: "Tidak ada tautan balik ditemukan",
+      title: "Tautan balik",
+      noBacklinksFound: "Tidak ada tautan balik yang ditemukan",
     },
     themeToggle: {
-      lightMode: "Mode Terang",
-      darkMode: "Mode Gelap",
+      lightMode: "Mode terang",
+      darkMode: "Mode gelap",
     },
     readerMode: {
-      title: "Mode Pembaca",
+      title: "Mode pembaca",
     },
     explorer: {
       title: "Penjelajah",
@@ -43,15 +43,15 @@ export default {
     },
     recentNotes: {
       title: "Catatan Terbaru",
-      seeRemainingMore: ({ remaining }) => `Lihat ${remaining} lagi →`,
+      seeRemainingMore: ({ remaining }) => `Lihat ${remaining} lainnya →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `Transklusi dari ${targetSlug}`,
-      linkToOriginal: "Tautan ke asli",
+      transcludeOf: ({ targetSlug }) => `Termasuk dari ${targetSlug}`,
+      linkToOriginal: "Tautan ke aslinya",
     },
     search: {
-      title: "Cari",
-      searchBarPlaceholder: "Cari sesuatu",
+      title: "Pencarian",
+      searchBarPlaceholder: "Telusuri sesuatu",
     },
     tableOfContents: {
       title: "Daftar Isi",
@@ -67,13 +67,13 @@ export default {
     },
     error: {
       title: "Tidak Ditemukan",
-      notFound: "Halaman ini bersifat privat atau tidak ada.",
+      notFound: "Halaman ini bersifat pribadi atau tidak ada.",
       home: "Kembali ke Beranda",
     },
     folderContent: {
       folder: "Folder",
       itemsUnderFolder: ({ count }) =>
-        count === 1 ? "1 item di bawah folder ini." : `${count} item di bawah folder ini.`,
+        count === 1 ? "1 item dalam folder ini." : `${count} item dalam folder ini.`,
     },
     tagContent: {
       tag: "Tag",
@@ -82,6 +82,17 @@ export default {
         count === 1 ? "1 item dengan tag ini." : `${count} item dengan tag ini.`,
       showingFirst: ({ count }) => `Menampilkan ${count} tag pertama.`,
       totalTags: ({ count }) => `Ditemukan total ${count} tag.`,
+    },
+    encryptedContent: {
+      loading: "Memuat 🔃",
+      password: "Kata sandi",
+      submit: "Kirim",
+      enterPassword: "Halaman ini terkunci. Silakan masukkan kata sandi untuk membuka:",
+      modernBrowser: "Silakan gunakan peramban yang lebih modern untuk membuka halaman ini.",
+      wrongPassword: "Kata sandi salah. Silakan masukkan kata sandi:",
+      noPayload: "Tidak ada muatan terenkripsi.",
+      decrypting: "Mendekripsi...",
+      defaultDescription: "Halaman ini dienkripsi.",
     },
   },
 } as const satisfies Translation

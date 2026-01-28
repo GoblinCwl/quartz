@@ -3,11 +3,11 @@ import { Translation } from "./definition"
 export default {
   propertyDefaults: {
     title: "Naamloos",
-    description: "Geen beschrijving gegeven.",
+    description: "Geen beschrijving gegeven",
   },
   components: {
     callout: {
-      note: "Notitie",
+      note: "Noot",
       abstract: "Samenvatting",
       info: "Info",
       todo: "Te doen",
@@ -42,7 +42,7 @@ export default {
       title: "Grafiekweergave",
     },
     recentNotes: {
-      title: "Recente notities",
+      title: "Recente Notities",
       seeRemainingMore: ({ remaining }) => `Zie ${remaining} meer →`,
     },
     transcludes: {
@@ -51,14 +51,13 @@ export default {
     },
     search: {
       title: "Zoeken",
-      searchBarPlaceholder: "Doorzoek de website",
+      searchBarPlaceholder: "Zoek naar iets",
     },
     tableOfContents: {
       title: "Inhoudsopgave",
     },
     contentMeta: {
-      readingTime: ({ minutes }) =>
-        minutes === 1 ? "1 minuut leestijd" : `${minutes} minuten leestijd`,
+      readingTime: ({ minutes }) => `${minutes} min. leestijd`,
     },
   },
   pages: {
@@ -68,8 +67,8 @@ export default {
     },
     error: {
       title: "Niet gevonden",
-      notFound: "Deze pagina is niet zichtbaar of bestaat niet.",
-      home: "Keer terug naar de start pagina",
+      notFound: "Deze pagina is privé of bestaat niet.",
+      home: "Terug naar de startpagina",
     },
     folderContent: {
       folder: "Map",
@@ -78,12 +77,22 @@ export default {
     },
     tagContent: {
       tag: "Label",
-      tagIndex: "Label-index",
+      tagIndex: "Labelindex",
       itemsUnderTag: ({ count }) =>
         count === 1 ? "1 item met dit label." : `${count} items met dit label.`,
-      showingFirst: ({ count }) =>
-        count === 1 ? "Eerste label tonen." : `Eerste ${count} labels tonen.`,
-      totalTags: ({ count }) => `${count} labels gevonden.`,
+      showingFirst: ({ count }) => `Eerste ${count} labels worden getoond.`,
+      totalTags: ({ count }) => `${count} labels in totaal.`,
+    },
+    encryptedContent: {
+      loading: "Laden 🔃",
+      password: "Wachtwoord",
+      submit: "Verzenden",
+      enterPassword: "Deze pagina is vergrendeld. Voer het wachtwoord in om te ontgrendelen:",
+      modernBrowser: "Gebruik een modernere browser om deze pagina te ontgrendelen.",
+      wrongPassword: "Verkeerd wachtwoord. Voer het wachtwoord in:",
+      noPayload: "Geen versleutelde inhoud.",
+      decrypting: "Decoderen...",
+      defaultDescription: "Deze pagina is versleuteld.",
     },
   },
 } as const satisfies Translation

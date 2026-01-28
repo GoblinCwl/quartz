@@ -3,16 +3,16 @@ import { Translation } from "./definition"
 export default {
   propertyDefaults: {
     title: "Атаусыз",
-    description: "Сипаттама берілмеген",
+    description: "Сипаттамасы жоқ",
   },
   components: {
     callout: {
-      note: "Ескерту",
-      abstract: "Аннотация",
+      note: "Ескертпе",
+      abstract: "Қысқаша мазмұн",
       info: "Ақпарат",
-      todo: "Істеу керек",
+      todo: "Жоспар",
       tip: "Кеңес",
-      success: "Сәттілік",
+      success: "Табыс",
       question: "Сұрақ",
       warning: "Ескерту",
       failure: "Қате",
@@ -22,42 +22,42 @@ export default {
       quote: "Дәйексөз",
     },
     backlinks: {
-      title: "Артқа сілтемелер",
-      noBacklinksFound: "Артқа сілтемелер табылмады",
+      title: "Кері сілтемелер",
+      noBacklinksFound: "Кері сілтемелер жоқ",
     },
     themeToggle: {
-      lightMode: "Жарық режимі",
-      darkMode: "Қараңғы режим",
+      lightMode: "Ашық түрі",
+      darkMode: "Қараңғы түрі",
     },
     readerMode: {
-      title: "Оқу режимі",
+      title: "Оқу түрі",
     },
     explorer: {
-      title: "Зерттеуші",
+      title: "Шолушы",
     },
     footer: {
-      createdWith: "Құрастырылған құрал:",
+      createdWith: "Келесімен жасалды",
     },
     graph: {
-      title: "Граф көрінісі",
+      title: "График көрінісі",
     },
     recentNotes: {
       title: "Соңғы жазбалар",
-      seeRemainingMore: ({ remaining }) => `Тағы ${remaining} жазбаны қарау →`,
+      seeRemainingMore: ({ remaining }) => `Тағы ${remaining} қарау →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `${targetSlug} кірістіру`,
-      linkToOriginal: "Бастапқыға сілтеме",
+      transcludeOf: ({ targetSlug }) => `${targetSlug} импорттау`,
+      linkToOriginal: "Түпнұсқаға сілтеме",
     },
     search: {
       title: "Іздеу",
       searchBarPlaceholder: "Бірдеңе іздеу",
     },
     tableOfContents: {
-      title: "Мазмұны",
+      title: "Мазмұндама",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => `${minutes} мин оқу`,
+      readingTime: ({ minutes }) => `${minutes} минут оқу`,
     },
   },
   pages: {
@@ -67,21 +67,32 @@ export default {
     },
     error: {
       title: "Табылмады",
-      notFound: "Бұл бет жеке немесе жоқ болуы мүмкін.",
-      home: "Басты бетке оралу",
+      notFound: "Бұл бет жеке немесе мүлдем жоқ.",
+      home: "Басты бетке қайту",
     },
     folderContent: {
       folder: "Қалта",
       itemsUnderFolder: ({ count }) =>
-        count === 1 ? "Бұл қалтада 1 элемент бар." : `Бұл қалтада ${count} элемент бар.`,
+        count === 1 ? "1 нәрсе осы қалтада." : `${count} нәрсе осы қалтада.`,
     },
     tagContent: {
       tag: "Тег",
       tagIndex: "Тегтер индексі",
       itemsUnderTag: ({ count }) =>
-        count === 1 ? "Бұл тегпен 1 элемент." : `Бұл тегпен ${count} элемент.`,
+        count === 1 ? "1 нәрсе осы тегпен белгіленген." : `${count} нәрсе осы тегпен белгіленген.`,
       showingFirst: ({ count }) => `Алғашқы ${count} тег көрсетілуде.`,
       totalTags: ({ count }) => `Барлығы ${count} тег табылды.`,
+    },
+    encryptedContent: {
+      loading: "Жүктелуде 🔃",
+      password: "Құпия сөз",
+      submit: "Жіберу",
+      enterPassword: "Бұл бет құлыпталған. Құпия сөзді енгізіп құлпын ашыңыз:",
+      modernBrowser: "Бұл беттің құлпын ашу үшін заманауи браузер қолданыңыз.",
+      wrongPassword: "Құпия сөз қате. Құпия сөзді енгізіңіз:",
+      noPayload: "Шифрланған деректер жоқ.",
+      decrypting: "Шифрдан шығаруда...",
+      defaultDescription: "Бұл бет шифрланған.",
     },
   },
 } as const satisfies Translation

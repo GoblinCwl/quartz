@@ -8,8 +8,8 @@ export default {
   components: {
     callout: {
       note: "Jegyzet",
-      abstract: "Abstract",
-      info: "Információ",
+      abstract: "Kivonat",
+      info: "Infó",
       todo: "Tennivaló",
       tip: "Tipp",
       success: "Siker",
@@ -17,13 +17,13 @@ export default {
       warning: "Figyelmeztetés",
       failure: "Hiba",
       danger: "Veszély",
-      bug: "Bug",
+      bug: "Hiba",
       example: "Példa",
       quote: "Idézet",
     },
     backlinks: {
-      title: "Visszautalások",
-      noBacklinksFound: "Nincs visszautalás",
+      title: "Visszacsatolások",
+      noBacklinksFound: "Nincsenek visszacsatolások",
     },
     themeToggle: {
       lightMode: "Világos mód",
@@ -33,20 +33,20 @@ export default {
       title: "Olvasó mód",
     },
     explorer: {
-      title: "Fájlböngésző",
+      title: "Felfedező",
     },
     footer: {
       createdWith: "Készítve ezzel:",
     },
     graph: {
-      title: "Grafikonnézet",
+      title: "Gráf nézet",
     },
     recentNotes: {
       title: "Legutóbbi jegyzetek",
-      seeRemainingMore: ({ remaining }) => `${remaining} további megtekintése →`,
+      seeRemainingMore: ({ remaining }) => `Még ${remaining} darab →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `${targetSlug} áthivatkozása`,
+      transcludeOf: ({ targetSlug }) => `${targetSlug} beillesztése`,
       linkToOriginal: "Hivatkozás az eredetire",
     },
     search: {
@@ -57,7 +57,7 @@ export default {
       title: "Tartalomjegyzék",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => `${minutes} perces olvasás`,
+      readingTime: ({ minutes }) => `${minutes} perc olvasás`,
     },
   },
   pages: {
@@ -67,19 +67,32 @@ export default {
     },
     error: {
       title: "Nem található",
-      notFound: "Ez a lap vagy privát vagy nem létezik.",
-      home: "Vissza a kezdőlapra",
+      notFound: "Ez a lap vagy privát, vagy nem létezik.",
+      home: "Vissza a főoldalra",
     },
     folderContent: {
       folder: "Mappa",
-      itemsUnderFolder: ({ count }) => `Ebben a mappában ${count} elem található.`,
+      itemsUnderFolder: ({ count }) =>
+        count === 1 ? "1 elem van ebben a mappában." : `${count} elem van ebben a mappában.`,
     },
     tagContent: {
       tag: "Címke",
       tagIndex: "Címke index",
-      itemsUnderTag: ({ count }) => `${count} elem található ezzel a címkével.`,
+      itemsUnderTag: ({ count }) =>
+        count === 1 ? "1 elem tartozik ehhez a címkéhez." : `${count} elem tartozik ehhez a címkéhez.`,
       showingFirst: ({ count }) => `Első ${count} címke megjelenítve.`,
       totalTags: ({ count }) => `Összesen ${count} címke található.`,
+    },
+    encryptedContent: {
+      loading: "Betöltés 🔃",
+      password: "Jelszó",
+      submit: "Elküld",
+      enterPassword: "Ez a lap zárolva van. Kérlek add meg a jelszót a feloldáshoz:",
+      modernBrowser: "Kérlek használj modern böngészőt a lap feloldásához.",
+      wrongPassword: "Hibás jelszó. Kérlek add meg újra a jelszót:",
+      noPayload: "Nincs titkosított adat.",
+      decrypting: "Visszafejtés...",
+      defaultDescription: "Ez a lap titkosítva van.",
     },
   },
 } as const satisfies Translation

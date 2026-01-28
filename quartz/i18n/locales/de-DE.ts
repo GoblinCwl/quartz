@@ -83,5 +83,16 @@ export default {
       showingFirst: ({ count }) => `Die ersten ${count} Tags werden angezeigt.`,
       totalTags: ({ count }) => `${count} Tags insgesamt.`,
     },
+    encryptedContent: {
+      loading: "Laden 🔃",
+      password: "Passwort",
+      submit: "Senden",
+      enterPassword: "Diese Seite ist gesperrt. Bitte Passwort eingeben, um sie zu entsperren:",
+      modernBrowser: "Bitte verwenden Sie einen moderneren Browser, um diese Seite zu entsperren.",
+      wrongPassword: "Falsches Passwort. Bitte geben Sie das Passwort erneut ein:",
+      noPayload: "Kein verschlüsselter Inhalt.",
+      decrypting: "Entschlüsseln...",
+      defaultDescription: "Diese Seite ist verschlüsselt.",
+    },
   },
 } as const satisfies Translation

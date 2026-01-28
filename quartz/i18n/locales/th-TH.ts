@@ -3,83 +3,96 @@ import { Translation } from "./definition"
 export default {
   propertyDefaults: {
     title: "ไม่มีชื่อ",
-    description: "ไม่ได้ระบุคำอธิบายย่อ",
+    description: "ไม่มีคำอธิบาย",
   },
   components: {
     callout: {
       note: "หมายเหตุ",
       abstract: "บทคัดย่อ",
       info: "ข้อมูล",
-      todo: "ต้องทำเพิ่มเติม",
-      tip: "คำแนะนำ",
-      success: "เรียบร้อย",
+      todo: "สิ่งที่ต้องทำ",
+      tip: "เคล็ดลับ",
+      success: "สำเร็จ",
       question: "คำถาม",
       warning: "คำเตือน",
-      failure: "ข้อผิดพลาด",
+      failure: "ความล้มเหลว",
       danger: "อันตราย",
-      bug: "บั๊ก",
+      bug: "จุดบกพร่อง",
       example: "ตัวอย่าง",
-      quote: "คำพูกยกมา",
+      quote: "คำพูด",
     },
     backlinks: {
-      title: "หน้าที่กล่าวถึง",
-      noBacklinksFound: "ไม่มีหน้าที่โยงมาหน้านี้",
+      title: "การเชื่อมโยงย้อนกลับ",
+      noBacklinksFound: "ไม่พบการเชื่อมโยงย้อนกลับ",
     },
     themeToggle: {
       lightMode: "โหมดสว่าง",
       darkMode: "โหมดมืด",
     },
     readerMode: {
-      title: "โหมดอ่าน",
+      title: "โหมดอ่านหนังสือ",
     },
     explorer: {
-      title: "รายการหน้า",
+      title: "ตัวสำรวจ",
     },
     footer: {
-      createdWith: "สร้างด้วย",
+      createdWith: "สร้างขึ้นด้วย",
     },
     graph: {
       title: "มุมมองกราฟ",
     },
     recentNotes: {
-      title: "บันทึกล่าสุด",
-      seeRemainingMore: ({ remaining }) => `ดูเพิ่มอีก ${remaining} รายการ →`,
+      title: "บันทึกย่อเมื่อเร็ว ๆ นี้",
+      seeRemainingMore: ({ remaining }) => `ดูเพิ่มเติม ${remaining} รายการ →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `รวมข้ามเนื้อหาจาก ${targetSlug}`,
-      linkToOriginal: "ดูหน้าต้นทาง",
+      transcludeOf: ({ targetSlug }) => `แทรกเนื้อหาจาก ${targetSlug}`,
+      linkToOriginal: "ลิงก์ไปยังต้นฉบับ",
     },
     search: {
       title: "ค้นหา",
-      searchBarPlaceholder: "ค้นหาบางอย่าง",
+      searchBarPlaceholder: "ค้นหาบางสิ่ง",
     },
     tableOfContents: {
       title: "สารบัญ",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => `อ่านราว ${minutes} นาที`,
+      readingTime: ({ minutes }) => `ใช้เวลาอ่าน ${minutes} นาที`,
     },
   },
   pages: {
     rss: {
-      recentNotes: "บันทึกล่าสุด",
-      lastFewNotes: ({ count }) => `${count} บันทึกล่าสุด`,
+      recentNotes: "บันทึกย่อเมื่อเร็ว ๆ นี้",
+      lastFewNotes: ({ count }) => `บันทึกย่อ ${count} รายการล่าสุด`,
     },
     error: {
-      title: "ไม่มีหน้านี้",
+      title: "ไม่พบ",
       notFound: "หน้านี้อาจตั้งค่าเป็นส่วนตัวหรือยังไม่ถูกสร้าง",
       home: "กลับหน้าหลัก",
     },
     folderContent: {
       folder: "โฟลเดอร์",
-      itemsUnderFolder: ({ count }) => `มี ${count} รายการในโฟลเดอร์นี้`,
+      itemsUnderFolder: ({ count }) =>
+        count === 1 ? "มี 1 รายการในโฟลเดอร์นี้" : `มี ${count} รายการในโฟลเดอร์นี้`,
     },
     tagContent: {
       tag: "แท็ก",
-      tagIndex: "แท็กทั้งหมด",
-      itemsUnderTag: ({ count }) => `มี ${count} รายการในแท็กนี้`,
-      showingFirst: ({ count }) => `แสดง ${count} แท็กแรก`,
-      totalTags: ({ count }) => `มีทั้งหมด ${count} แท็ก`,
+      tagIndex: "ดัชนีแท็ก",
+      itemsUnderTag: ({ count }) =>
+        count === 1 ? "มี 1 รายการที่ติดแท็กนี้" : `มี ${count} รายการที่ติดแท็กนี้`,
+      showingFirst: ({ count }) => `กำลังแสดง ${count} แท็กแรก`,
+      totalTags: ({ count }) => `พบทั้งหมด ${count} แท็ก`,
+    },
+    encryptedContent: {
+      loading: "กำลังโหลด 🔃",
+      password: "รหัสผ่าน",
+      submit: "ส่ง",
+      enterPassword: "หน้านี้ถูกล็อค โปรดป้อนรหัสผ่านเพื่อปลดล็อค:",
+      modernBrowser: "โปรดใช้เบราว์เซอร์ที่ทันสมัยกว่านี้เพื่อปลดล็อคหน้านี้",
+      wrongPassword: "รหัสผ่านไม่ถูกต้อง โปรดป้อนรหัสผ่าน:",
+      noPayload: "ไม่มีเนื้อหาที่เข้ารหัส",
+      decrypting: "กำลังถอดรหัส...",
+      defaultDescription: "หน้านี้ถูกเข้ารหัสไว้",
     },
   },
 } as const satisfies Translation

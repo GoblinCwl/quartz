@@ -3,55 +3,55 @@ import { Translation } from "./definition"
 export default {
   propertyDefaults: {
     title: "Bez názvu",
-    description: "Nebyl uveden žádný popis",
+    description: "Bez popisu",
   },
   components: {
     callout: {
       note: "Poznámka",
-      abstract: "Abstract",
-      info: "Info",
-      todo: "Todo",
+      abstract: "Abstrakt",
+      info: "Informace",
+      todo: "Úkol",
       tip: "Tip",
       success: "Úspěch",
       question: "Otázka",
-      warning: "Upozornění",
-      failure: "Chyba",
+      warning: "Varování",
+      failure: "Neúspěch",
       danger: "Nebezpečí",
-      bug: "Bug",
+      bug: "Chyba",
       example: "Příklad",
       quote: "Citace",
     },
     backlinks: {
-      title: "Příchozí odkazy",
-      noBacklinksFound: "Nenalezeny žádné příchozí odkazy",
+      title: "Zpětné odkazy",
+      noBacklinksFound: "Nenalezeny žádné zpětné odkazy",
     },
     themeToggle: {
       lightMode: "Světlý režim",
       darkMode: "Tmavý režim",
     },
     readerMode: {
-      title: "Režim čtečky",
+      title: "Režim čtenáře",
     },
     explorer: {
-      title: "Procházet",
+      title: "Průzkumník",
     },
     footer: {
       createdWith: "Vytvořeno pomocí",
     },
     graph: {
-      title: "Graf",
+      title: "Zobrazení grafu",
     },
     recentNotes: {
-      title: "Nejnovější poznámky",
-      seeRemainingMore: ({ remaining }) => `Zobraz ${remaining} dalších →`,
+      title: "Nedávné poznámky",
+      seeRemainingMore: ({ remaining }) => `Zobrazit dalších ${remaining} →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `Zobrazení ${targetSlug}`,
-      linkToOriginal: "Odkaz na původní dokument",
+      transcludeOf: ({ targetSlug }) => `Vložení ${targetSlug}`,
+      linkToOriginal: "Odkaz na originál",
     },
     search: {
       title: "Hledat",
-      searchBarPlaceholder: "Hledejte něco",
+      searchBarPlaceholder: "Najít něco",
     },
     tableOfContents: {
       title: "Obsah",
@@ -62,12 +62,12 @@ export default {
   },
   pages: {
     rss: {
-      recentNotes: "Nejnovější poznámky",
+      recentNotes: "Nedávné poznámky",
       lastFewNotes: ({ count }) => `Posledních ${count} poznámek`,
     },
     error: {
       title: "Nenalezeno",
-      notFound: "Tato stránka je buď soukromá, nebo neexistuje.",
+      notFound: "Tato stránka je soukromá nebo neexistuje.",
       home: "Návrat na domovskou stránku",
     },
     folderContent: {
@@ -76,12 +76,23 @@ export default {
         count === 1 ? "1 položka v této složce." : `${count} položek v této složce.`,
     },
     tagContent: {
-      tag: "Tag",
-      tagIndex: "Rejstřík tagů",
+      tag: "Štítek",
+      tagIndex: "Index štítků",
       itemsUnderTag: ({ count }) =>
-        count === 1 ? "1 položka s tímto tagem." : `${count} položek s tímto tagem.`,
-      showingFirst: ({ count }) => `Zobrazují se první ${count} tagy.`,
-      totalTags: ({ count }) => `Nalezeno celkem ${count} tagů.`,
+        count === 1 ? "1 položka s tímto štítkem." : `${count} položek s tímto štítkem.`,
+      showingFirst: ({ count }) => `Zobrazuji prvních ${count} štítků.`,
+      totalTags: ({ count }) => `Nalezeno celkem ${count} štítků.`,
+    },
+    encryptedContent: {
+      loading: "Načítání 🔃",
+      password: "Heslo",
+      submit: "Odeslat",
+      enterPassword: "Tato stránka je uzamčena. Chcete-li ji odemknout, zadejte heslo:",
+      modernBrowser: "Chcete-li odemknout tuto stránku, použijte modernější prohlížeč.",
+      wrongPassword: "Nesprávné heslo. Zadejte prosím správné heslo:",
+      noPayload: "Žádná zašifrovaná data.",
+      decrypting: "Dešifrování...",
+      defaultDescription: "Tato stránka je zašifrovaná.",
     },
   },
 } as const satisfies Translation

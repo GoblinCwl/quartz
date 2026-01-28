@@ -3,7 +3,7 @@ import { Translation } from "./definition"
 export default {
   propertyDefaults: {
     title: "Без назви",
-    description: "Опис не надано",
+    description: "Без опису",
   },
   components: {
     callout: {
@@ -17,7 +17,7 @@ export default {
       warning: "Попередження",
       failure: "Невдача",
       danger: "Небезпека",
-      bug: "Баг",
+      bug: "Помилка",
       example: "Приклад",
       quote: "Цитата",
     },
@@ -39,19 +39,19 @@ export default {
       createdWith: "Створено за допомогою",
     },
     graph: {
-      title: "Вигляд графа",
+      title: "Граф подання",
     },
     recentNotes: {
       title: "Останні нотатки",
       seeRemainingMore: ({ remaining }) => `Переглянути ще ${remaining} →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `Видобуто з ${targetSlug}`,
+      transcludeOf: ({ targetSlug }) => `Включення з ${targetSlug}`,
       linkToOriginal: "Посилання на оригінал",
     },
     search: {
       title: "Пошук",
-      searchBarPlaceholder: "Шукати щось",
+      searchBarPlaceholder: "Знайти щось",
     },
     tableOfContents: {
       title: "Зміст",
@@ -63,7 +63,7 @@ export default {
   pages: {
     rss: {
       recentNotes: "Останні нотатки",
-      lastFewNotes: ({ count }) => `Останні нотатки: ${count}`,
+      lastFewNotes: ({ count }) => `Останні ${count} нотатки`,
     },
     error: {
       title: "Не знайдено",
@@ -71,17 +71,28 @@ export default {
       home: "Повернутися на головну сторінку",
     },
     folderContent: {
-      folder: "Тека",
+      folder: "Папка",
       itemsUnderFolder: ({ count }) =>
-        count === 1 ? "У цій теці 1 елемент." : `Елементів у цій теці: ${count}.`,
+        count === 1 ? "1 елемент у цій папці." : `${count} елементів у цій папці.`,
     },
     tagContent: {
-      tag: "Мітка",
-      tagIndex: "Індекс мітки",
+      tag: "Тег",
+      tagIndex: "Індекс тегів",
       itemsUnderTag: ({ count }) =>
-        count === 1 ? "1 елемент з цією міткою." : `Елементів з цією міткою: ${count}.`,
-      showingFirst: ({ count }) => `Показ перших ${count} міток.`,
-      totalTags: ({ count }) => `Всього знайдено міток: ${count}.`,
+        count === 1 ? "1 елемент з цим тегом." : `${count} елементів з цим тегом.`,
+      showingFirst: ({ count }) => `Показано перші ${count} тегів.`,
+      totalTags: ({ count }) => `Знайдено загалом ${count} тегів.`,
+    },
+    encryptedContent: {
+      loading: "Завантаження 🔃",
+      password: "Пароль",
+      submit: "Надіслати",
+      enterPassword: "Ця сторінка заблокована. Будь ласка, введіть пароль для розблокування:",
+      modernBrowser: "Будь ласка, скористайтеся сучаснішим браузером для розблокування цієї сторінки.",
+      wrongPassword: "Неправильний пароль. Будь ласка, введіть пароль:",
+      noPayload: "Немає зашифрованих даних.",
+      decrypting: "Розшифровка...",
+      defaultDescription: "Ця сторінка зашифрована.",
     },
   },
 } as const satisfies Translation

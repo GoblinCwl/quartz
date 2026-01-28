@@ -3,13 +3,13 @@ import { Translation } from "./definition"
 export default {
   propertyDefaults: {
     title: "Без названия",
-    description: "Описание отсутствует",
+    description: "Без описания",
   },
   components: {
     callout: {
       note: "Заметка",
       abstract: "Резюме",
-      info: "Инфо",
+      info: "Информация",
       todo: "Сделать",
       tip: "Подсказка",
       success: "Успех",
@@ -17,13 +17,13 @@ export default {
       warning: "Предупреждение",
       failure: "Неудача",
       danger: "Опасность",
-      bug: "Баг",
+      bug: "Ошибка",
       example: "Пример",
       quote: "Цитата",
     },
     backlinks: {
       title: "Обратные ссылки",
-      noBacklinksFound: "Обратные ссылки отсутствуют",
+      noBacklinksFound: "Обратные ссылки не найдены",
     },
     themeToggle: {
       lightMode: "Светлый режим",
@@ -43,11 +43,10 @@ export default {
     },
     recentNotes: {
       title: "Недавние заметки",
-      seeRemainingMore: ({ remaining }) =>
-        `Посмотреть оставш${getForm(remaining, "уюся", "иеся", "иеся")} ${remaining} →`,
+      seeRemainingMore: ({ remaining }) => `Посмотреть ещё ${remaining} →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `Переход из ${targetSlug}`,
+      transcludeOf: ({ targetSlug }) => `Включает ${targetSlug}`,
       linkToOriginal: "Ссылка на оригинал",
     },
     search: {
@@ -55,45 +54,45 @@ export default {
       searchBarPlaceholder: "Найти что-нибудь",
     },
     tableOfContents: {
-      title: "Оглавление",
+      title: "Содержание",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => `время чтения ~${minutes} мин.`,
+      readingTime: ({ minutes }) => `${minutes} мин. чтения`,
     },
   },
   pages: {
     rss: {
       recentNotes: "Недавние заметки",
-      lastFewNotes: ({ count }) =>
-        `Последн${getForm(count, "яя", "ие", "ие")} ${count} замет${getForm(count, "ка", "ки", "ок")}`,
+      lastFewNotes: ({ count }) => `Последние ${count} заметок`,
     },
     error: {
       title: "Страница не найдена",
-      notFound: "Эта страница приватная или не существует",
+      notFound: "Эта страница приватная или не существует.",
       home: "Вернуться на главную страницу",
     },
     folderContent: {
       folder: "Папка",
       itemsUnderFolder: ({ count }) =>
-        `в этой папке ${count} элемент${getForm(count, "", "а", "ов")}`,
+        count === 1 ? "1 элемент в этой папке." : `${count} элементов в этой папке.`,
     },
     tagContent: {
       tag: "Тег",
       tagIndex: "Индекс тегов",
-      itemsUnderTag: ({ count }) => `с этим тегом ${count} элемент${getForm(count, "", "а", "ов")}`,
-      showingFirst: ({ count }) =>
-        `Показыва${getForm(count, "ется", "ются", "ются")} ${count} тег${getForm(count, "", "а", "ов")}`,
-      totalTags: ({ count }) => `Всего ${count} тег${getForm(count, "", "а", "ов")}`,
+      itemsUnderTag: ({ count }) =>
+        count === 1 ? "1 элемент с этим тегом." : `${count} элементов с этим тегом.`,
+      showingFirst: ({ count }) => `Показаны первые ${count} тегов.`,
+      totalTags: ({ count }) => `Найдено ${count} тегов всего.`,
+    },
+    encryptedContent: {
+      loading: "Загрузка 🔃",
+      password: "Пароль",
+      submit: "Отправить",
+      enterPassword: "Эта страница заблокирована. Пожалуйста, введите пароль для разблокировки:",
+      modernBrowser: "Пожалуйста, используйте более современный браузер для разблокировки этой страницы.",
+      wrongPassword: "Неверный пароль. Пожалуйста, введите пароль:",
+      noPayload: "Нет зашифрованных данных.",
+      decrypting: "Расшифровка...",
+      defaultDescription: "Эта страница зашифрована.",
     },
   },
 } as const satisfies Translation
-
-function getForm(number: number, form1: string, form2: string, form5: string): string {
-  const remainder100 = number % 100
-  const remainder10 = remainder100 % 10
-
-  if (remainder100 >= 10 && remainder100 <= 20) return form5
-  if (remainder10 > 1 && remainder10 < 5) return form2
-  if (remainder10 == 1) return form1
-  return form5
-}

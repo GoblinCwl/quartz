@@ -2,8 +2,8 @@ import { Translation } from "./definition"
 
 export default {
   propertyDefaults: {
-    title: "無題",
-    description: "説明なし",
+    title: "タイトルなし",
+    description: "説明はありません",
   },
   components: {
     callout: {
@@ -42,44 +42,57 @@ export default {
       title: "グラフビュー",
     },
     recentNotes: {
-      title: "最近の記事",
-      seeRemainingMore: ({ remaining }) => `さらに${remaining}件 →`,
+      title: "最近のノート",
+      seeRemainingMore: ({ remaining }) => `${remaining} 件以上表示 →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `${targetSlug}のまとめ`,
+      transcludeOf: ({ targetSlug }) => `${targetSlug} のインクルード`,
       linkToOriginal: "元記事へのリンク",
     },
     search: {
       title: "検索",
-      searchBarPlaceholder: "検索ワードを入力",
+      searchBarPlaceholder: "検索する",
     },
     tableOfContents: {
       title: "目次",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => `${minutes} min read`,
+      readingTime: ({ minutes }) => `${minutes} 分で読了`,
     },
   },
   pages: {
     rss: {
-      recentNotes: "最近の記事",
-      lastFewNotes: ({ count }) => `最新の${count}件`,
+      recentNotes: "最近のノート",
+      lastFewNotes: ({ count }) => `直近 ${count} 件のノート`,
     },
     error: {
-      title: "Not Found",
-      notFound: "ページが存在しないか、非公開設定になっています。",
-      home: "ホームページに戻る",
+      title: "見つかりません",
+      notFound: "このページは非公開であるか、存在しません。",
+      home: "ホームに戻る",
     },
     folderContent: {
       folder: "フォルダ",
-      itemsUnderFolder: ({ count }) => `${count}件のページ`,
+      itemsUnderFolder: ({ count }) =>
+        count === 1 ? "このフォルダには1つのアイテムがあります。" : `このフォルダには${count}個のアイテムがあります。`,
     },
     tagContent: {
       tag: "タグ",
       tagIndex: "タグ一覧",
-      itemsUnderTag: ({ count }) => `${count}件のページ`,
-      showingFirst: ({ count }) => `のうち最初の${count}件を表示しています`,
-      totalTags: ({ count }) => `全${count}個のタグを表示中`,
+      itemsUnderTag: ({ count }) =>
+        count === 1 ? "このタグが付いたアイテムは1つあります。" : `このタグが付いたアイテムは${count}個あります。`,
+      showingFirst: ({ count }) => `最初の ${count} 個のタグを表示しています。`,
+      totalTags: ({ count }) => `合計 ${count} 個のタグが見つかりました。`,
+    },
+    encryptedContent: {
+      loading: "読み込み中 🔃",
+      password: "パスワード",
+      submit: "送信",
+      enterPassword: "このページはロックされています。ロックを解除するにはパスワードを入力してください:",
+      modernBrowser: "このページのロックを解除するには、より新しいブラウザを使用してください。",
+      wrongPassword: "パスワードが間違っています。パスワードを再入力してください:",
+      noPayload: "暗号化されたデータがありません。",
+      decrypting: "復号中...",
+      defaultDescription: "このページは暗号化されています。",
     },
   },
 } as const satisfies Translation

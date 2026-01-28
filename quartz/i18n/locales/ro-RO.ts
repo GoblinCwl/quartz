@@ -3,13 +3,13 @@ import { Translation } from "./definition"
 export default {
   propertyDefaults: {
     title: "Fără titlu",
-    description: "Nici o descriere furnizată",
+    description: "Fără descriere",
   },
   components: {
     callout: {
       note: "Notă",
       abstract: "Rezumat",
-      info: "Informație",
+      info: "Informații",
       todo: "De făcut",
       tip: "Sfat",
       success: "Succes",
@@ -26,11 +26,11 @@ export default {
       noBacklinksFound: "Nu s-au găsit legături înapoi",
     },
     themeToggle: {
-      lightMode: "Modul luminos",
-      darkMode: "Modul întunecat",
+      lightMode: "Mod luminos",
+      darkMode: "Mod întunecat",
     },
     readerMode: {
-      title: "Modul de citire",
+      title: "Mod cititor",
     },
     explorer: {
       title: "Explorator",
@@ -39,26 +39,25 @@ export default {
       createdWith: "Creat cu",
     },
     graph: {
-      title: "Graf",
+      title: "Vizualizare Graf",
     },
     recentNotes: {
-      title: "Notițe recente",
+      title: "Notițe Recente",
       seeRemainingMore: ({ remaining }) => `Vezi încă ${remaining} →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `Extras din ${targetSlug}`,
-      linkToOriginal: "Legătură către original",
+      transcludeOf: ({ targetSlug }) => `Includere din ${targetSlug}`,
+      linkToOriginal: "Link către original",
     },
     search: {
       title: "Căutare",
-      searchBarPlaceholder: "Introduceți termenul de căutare...",
+      searchBarPlaceholder: "Caută ceva",
     },
     tableOfContents: {
       title: "Cuprins",
     },
     contentMeta: {
-      readingTime: ({ minutes }) =>
-        minutes == 1 ? `lectură de 1 minut` : `lectură de ${minutes} minute`,
+      readingTime: ({ minutes }) => `${minutes} min de citit`,
     },
   },
   pages: {
@@ -67,22 +66,33 @@ export default {
       lastFewNotes: ({ count }) => `Ultimele ${count} notițe`,
     },
     error: {
-      title: "Pagina nu a fost găsită",
-      notFound: "Fie această pagină este privată, fie nu există.",
-      home: "Reveniți la pagina de pornire",
+      title: "Negăsit",
+      notFound: "Această pagină este privată sau nu există.",
+      home: "Înapoi la Pagina Principală",
     },
     folderContent: {
       folder: "Dosar",
       itemsUnderFolder: ({ count }) =>
-        count === 1 ? "1 articol în acest dosar." : `${count} elemente în acest dosar.`,
+        count === 1 ? "1 articol în acest dosar." : `${count} articole în acest dosar.`,
     },
     tagContent: {
       tag: "Etichetă",
-      tagIndex: "Indexul etichetelor",
+      tagIndex: "Index Etichete",
       itemsUnderTag: ({ count }) =>
         count === 1 ? "1 articol cu această etichetă." : `${count} articole cu această etichetă.`,
       showingFirst: ({ count }) => `Se afișează primele ${count} etichete.`,
       totalTags: ({ count }) => `Au fost găsite ${count} etichete în total.`,
+    },
+    encryptedContent: {
+      loading: "Se încarcă 🔃",
+      password: "Parolă",
+      submit: "Trimite",
+      enterPassword: "Această pagină este blocată. Introduceți parola pentru a debloca:",
+      modernBrowser: "Vă rugăm să folosiți un browser mai modern pentru a debloca această pagină.",
+      wrongPassword: "Parolă greșită. Vă rugăm să introduceți parola:",
+      noPayload: "Nu există conținut criptat.",
+      decrypting: "Se decriptează...",
+      defaultDescription: "Această pagină este criptată.",
     },
   },
 } as const satisfies Translation

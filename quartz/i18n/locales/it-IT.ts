@@ -3,34 +3,34 @@ import { Translation } from "./definition"
 export default {
   propertyDefaults: {
     title: "Senza titolo",
-    description: "Nessuna descrizione",
+    description: "Nessuna descrizione fornita",
   },
   components: {
     callout: {
       note: "Nota",
-      abstract: "Abstract",
-      info: "Info",
+      abstract: "Riassunto",
+      info: "Informazione",
       todo: "Da fare",
       tip: "Consiglio",
-      success: "Completato",
+      success: "Successo",
       question: "Domanda",
-      warning: "Attenzione",
-      failure: "Errore",
+      warning: "Avviso",
+      failure: "Fallimento",
       danger: "Pericolo",
-      bug: "Problema",
+      bug: "Bug",
       example: "Esempio",
       quote: "Citazione",
     },
     backlinks: {
       title: "Link entranti",
-      noBacklinksFound: "Nessun link entrante",
+      noBacklinksFound: "Nessun link entrante trovato",
     },
     themeToggle: {
-      lightMode: "Tema chiaro",
-      darkMode: "Tema scuro",
+      lightMode: "Modalità chiara",
+      darkMode: "Modalità scura",
     },
     readerMode: {
-      title: "Modalità lettura",
+      title: "Modalità lettore",
     },
     explorer: {
       title: "Esplora",
@@ -39,37 +39,36 @@ export default {
       createdWith: "Creato con",
     },
     graph: {
-      title: "Vista grafico",
+      title: "Vista del grafo",
     },
     recentNotes: {
       title: "Note recenti",
-      seeRemainingMore: ({ remaining }) =>
-        remaining === 1 ? "Vedi 1 altra →" : `Vedi altre ${remaining} →`,
+      seeRemainingMore: ({ remaining }) => `Vedi ${remaining} in più →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `Inclusione di ${targetSlug}`,
-      linkToOriginal: "Link all'originale",
+      transcludeOf: ({ targetSlug }) => `Transclusione di ${targetSlug}`,
+      linkToOriginal: "Collegamento all'originale",
     },
     search: {
-      title: "Cerca",
+      title: "Ricerca",
       searchBarPlaceholder: "Cerca qualcosa",
     },
     tableOfContents: {
-      title: "Indice",
+      title: "Indice dei contenuti",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => (minutes === 1 ? "1 minuto" : `${minutes} minuti`),
+      readingTime: ({ minutes }) => `${minutes} min lettura`,
     },
   },
   pages: {
     rss: {
       recentNotes: "Note recenti",
-      lastFewNotes: ({ count }) => (count === 1 ? "Ultima nota" : `Ultime ${count} note`),
+      lastFewNotes: ({ count }) => `Ultime ${count} note`,
     },
     error: {
       title: "Non trovato",
-      notFound: "Questa pagina è privata o non esiste.",
-      home: "Ritorna alla home page",
+      notFound: "Questa pagina è privata o inesistente.",
+      home: "Ritorna alla pagina iniziale",
     },
     folderContent: {
       folder: "Cartella",
@@ -81,9 +80,19 @@ export default {
       tagIndex: "Indice etichette",
       itemsUnderTag: ({ count }) =>
         count === 1 ? "1 oggetto con questa etichetta." : `${count} oggetti con questa etichetta.`,
-      showingFirst: ({ count }) => (count === 1 ? "Prima etichetta." : `Prime ${count} etichette.`),
-      totalTags: ({ count }) =>
-        count === 1 ? "Trovata 1 etichetta in totale." : `Trovate ${count} etichette totali.`,
+      showingFirst: ({ count }) => `Mostrando le prime ${count} etichette.`,
+      totalTags: ({ count }) => `${count} etichette trovate in totale.`,
+    },
+    encryptedContent: {
+      loading: "Caricamento 🔃",
+      password: "Password",
+      submit: "Invia",
+      enterPassword: "Questa pagina è bloccata. Inserisci la password per sbloccarla:",
+      modernBrowser: "Utilizza un browser più moderno per sbloccare questa pagina.",
+      wrongPassword: "Password errata. Inserisci la password:",
+      noPayload: "Nessun contenuto crittografato.",
+      decrypting: "Decrittografia in corso...",
+      defaultDescription: "Questa pagina è crittografata.",
     },
   },
 } as const satisfies Translation

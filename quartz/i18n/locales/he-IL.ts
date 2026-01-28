@@ -5,29 +5,29 @@ export default {
     title: "ללא כותרת",
     description: "לא סופק תיאור",
   },
-  direction: "rtl" as const,
+  direction: "rtl",
   components: {
     callout: {
       note: "הערה",
       abstract: "תקציר",
       info: "מידע",
-      todo: "לעשות",
+      todo: "לביצוע",
       tip: "טיפ",
       success: "הצלחה",
       question: "שאלה",
       warning: "אזהרה",
-      failure: "כשלון",
+      failure: "כישלון",
       danger: "סכנה",
       bug: "באג",
       example: "דוגמה",
       quote: "ציטוט",
     },
     backlinks: {
-      title: "קישורים חוזרים",
-      noBacklinksFound: "לא נמצאו קישורים חוזרים",
+      title: "קישורים חזרה",
+      noBacklinksFound: "לא נמצאו קישורים חזרה",
     },
     themeToggle: {
-      lightMode: "מצב בהיר",
+      lightMode: "מצב מואר",
       darkMode: "מצב כהה",
     },
     readerMode: {
@@ -40,25 +40,25 @@ export default {
       createdWith: "נוצר באמצעות",
     },
     graph: {
-      title: "מבט גרף",
+      title: "תצוגת גרף",
     },
     recentNotes: {
       title: "הערות אחרונות",
-      seeRemainingMore: ({ remaining }) => `עיין ב ${remaining} נוספים →`,
+      seeRemainingMore: ({ remaining }) => `ראה ${remaining} נוספות →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `מצוטט מ ${targetSlug}`,
-      linkToOriginal: "קישור למקורי",
+      transcludeOf: ({ targetSlug }) => `הכללת ${targetSlug}`,
+      linkToOriginal: "קישור למקור",
     },
     search: {
       title: "חיפוש",
-      searchBarPlaceholder: "חפשו משהו",
+      searchBarPlaceholder: "חפש משהו",
     },
     tableOfContents: {
       title: "תוכן עניינים",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => `${minutes} דקות קריאה`,
+      readingTime: ({ minutes }) => `קריאה של ${minutes} דק'`,
     },
   },
   pages: {
@@ -68,21 +68,32 @@ export default {
     },
     error: {
       title: "לא נמצא",
-      notFound: "העמוד הזה פרטי או לא קיים.",
-      home: "חזרה לעמוד הבית",
+      notFound: "דף זה פרטי או שאינו קיים.",
+      home: "חזרה לדף הבית",
     },
     folderContent: {
       folder: "תיקייה",
       itemsUnderFolder: ({ count }) =>
-        count === 1 ? "פריט אחד תחת תיקייה זו." : `${count} פריטים תחת תיקייה זו.`,
+        count === 1 ? "פריט אחד בתיקייה זו." : `${count} פריטים בתיקייה זו.`,
     },
     tagContent: {
-      tag: "תגית",
-      tagIndex: "מפתח התגיות",
+      tag: "תג",
+      tagIndex: "אינדקס תגים",
       itemsUnderTag: ({ count }) =>
-        count === 1 ? "פריט אחד עם תגית זו." : `${count} פריטים עם תגית זו.`,
-      showingFirst: ({ count }) => `מראה את ה-${count} תגיות הראשונות.`,
-      totalTags: ({ count }) => `${count} תגיות נמצאו סך הכל.`,
+        count === 1 ? "פריט אחד עם תג זה." : `${count} פריטים עם תג זה.`,
+      showingFirst: ({ count }) => `מציג את ${count} התגים הראשונים.`,
+      totalTags: ({ count }) => `נמצאו ${count} תגים בסך הכל.`,
+    },
+    encryptedContent: {
+      loading: "טוען 🔃",
+      password: "סיסמה",
+      submit: "שלח",
+      enterPassword: "דף זה נעול. אנא הזן סיסמה כדי-unlock:",
+      modernBrowser: "אנא השתמש בדפדפן עדכני יותר כדי לפתוח דף זה.",
+      wrongPassword: "סיסמה שגויה. אנא הזן את הסיסמה:",
+      noPayload: "אין תוכן מוצפן.",
+      decrypting: "מפענח...",
+      defaultDescription: "דף זה מוצפן.",
     },
   },
 } as const satisfies Translation

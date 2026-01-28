@@ -2,22 +2,22 @@ import { Translation } from "./definition"
 
 export default {
   propertyDefaults: {
-    title: "Uten navn",
-    description: "Ingen beskrivelse angitt",
+    title: "Uten tittel",
+    description: "Ingen beskrivelse gitt",
   },
   components: {
     callout: {
-      note: "Notis",
-      abstract: "Abstrakt",
+      note: "Notat",
+      abstract: "Sammendrag",
       info: "Info",
-      todo: "Husk på",
+      todo: "Gjøremål",
       tip: "Tips",
       success: "Suksess",
       question: "Spørsmål",
       warning: "Advarsel",
       failure: "Feil",
-      danger: "Farlig",
-      bug: "Bug",
+      danger: "Fare",
+      bug: "Programfeil",
       example: "Eksempel",
       quote: "Sitat",
     },
@@ -30,58 +30,69 @@ export default {
       darkMode: "Mørk modus",
     },
     readerMode: {
-      title: "Læsemodus",
+      title: "Lesertilstand",
     },
     explorer: {
       title: "Utforsker",
     },
     footer: {
-      createdWith: "Laget med",
+      createdWith: "Opprettet med",
     },
     graph: {
-      title: "Graf-visning",
+      title: "Grafvisning",
     },
     recentNotes: {
       title: "Nylige notater",
-      seeRemainingMore: ({ remaining }) => `Se ${remaining} til →`,
+      seeRemainingMore: ({ remaining }) => `Se ${remaining} flere →`,
     },
     transcludes: {
-      transcludeOf: ({ targetSlug }) => `Transkludering of ${targetSlug}`,
-      linkToOriginal: "Lenke til original",
+      transcludeOf: ({ targetSlug }) => `Inkludert fra ${targetSlug}`,
+      linkToOriginal: "Lenke til originalen",
     },
     search: {
       title: "Søk",
       searchBarPlaceholder: "Søk etter noe",
     },
     tableOfContents: {
-      title: "Oversikt",
+      title: "Innholdsfortegnelse",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => `${minutes} min lesning`,
+      readingTime: ({ minutes }) => `${minutes} min lesing`,
     },
   },
   pages: {
     rss: {
-      recentNotes: "Nylige notat",
-      lastFewNotes: ({ count }) => `Siste ${count} notat`,
+      recentNotes: "Nylige notater",
+      lastFewNotes: ({ count }) => `Siste ${count} notater`,
     },
     error: {
       title: "Ikke funnet",
-      notFound: "Enten er denne siden privat eller så finnes den ikke.",
-      home: "Returner til hovedsiden",
+      notFound: "Denne siden er enten privat eller eksisterer ikke.",
+      home: "Gå tilbake til startsiden",
     },
     folderContent: {
       folder: "Mappe",
       itemsUnderFolder: ({ count }) =>
-        count === 1 ? "1 gjenstand i denne mappen." : `${count} gjenstander i denne mappen.`,
+        count === 1 ? "1 element i denne mappen." : `${count} elementer i denne mappen.`,
     },
     tagContent: {
-      tag: "Tagg",
-      tagIndex: "Tagg Indeks",
+      tag: "Merke",
+      tagIndex: "Merkeindeks",
       itemsUnderTag: ({ count }) =>
-        count === 1 ? "1 gjenstand med denne taggen." : `${count} gjenstander med denne taggen.`,
-      showingFirst: ({ count }) => `Viser første ${count} tagger.`,
-      totalTags: ({ count }) => `Fant totalt ${count} tagger.`,
+        count === 1 ? "1 element med dette merket." : `${count} elementer med dette merket.`,
+      showingFirst: ({ count }) => `Viser de første ${count} merkene.`,
+      totalTags: ({ count }) => `Fant totalt ${count} merker.`,
+    },
+    encryptedContent: {
+      loading: "Laster 🔃",
+      password: "Passord",
+      submit: "Send",
+      enterPassword: "Denne siden er låst. Skriv inn passord for å låse opp:",
+      modernBrowser: "Bruk en mer moderne nettleser for å låse opp denne siden.",
+      wrongPassword: "Feil passord. Skriv inn passordet:",
+      noPayload: "Ingen kryptert innhold.",
+      decrypting: "Dekrypterer...",
+      defaultDescription: "Denne siden er kryptert.",
     },
   },
 } as const satisfies Translation

@@ -2,47 +2,47 @@ import { Translation } from "./definition"
 
 export default {
   propertyDefaults: {
-    title: "Be Pavadinimo",
-    description: "Aprašymas Nepateiktas",
+    title: "Be pavadinimo",
+    description: "Aprašymas nepateiktas",
   },
   components: {
     callout: {
       note: "Pastaba",
       abstract: "Santrauka",
       info: "Informacija",
-      todo: "Darbų sąrašas",
+      todo: "Atlikti",
       tip: "Patarimas",
-      success: "Sėkmingas",
+      success: "Sėkmė",
       question: "Klausimas",
       warning: "Įspėjimas",
-      failure: "Nesėkmingas",
+      failure: "Nepavyko",
       danger: "Pavojus",
       bug: "Klaida",
       example: "Pavyzdys",
       quote: "Citata",
     },
     backlinks: {
-      title: "Atgalinės Nuorodos",
-      noBacklinksFound: "Atgalinių Nuorodų Nerasta",
+      title: "Atgalinės nuorodos",
+      noBacklinksFound: "Atgalinių nuorodų nerasta",
     },
     themeToggle: {
-      lightMode: "Šviesus Režimas",
-      darkMode: "Tamsus Režimas",
+      lightMode: "Šviesus režimas",
+      darkMode: "Tamsus režimas",
     },
     readerMode: {
-      title: "Modalità lettore",
+      title: "Skaitymo režimas",
     },
     explorer: {
       title: "Naršyklė",
     },
     footer: {
-      createdWith: "Sukurta Su",
+      createdWith: "Sukurta su",
     },
     graph: {
-      title: "Grafiko Vaizdas",
+      title: "Grafiko rodinys",
     },
     recentNotes: {
-      title: "Naujausi Užrašai",
+      title: "Paskutinės pastabos",
       seeRemainingMore: ({ remaining }) => `Peržiūrėti dar ${remaining} →`,
     },
     transcludes: {
@@ -51,7 +51,7 @@ export default {
     },
     search: {
       title: "Paieška",
-      searchBarPlaceholder: "Ieškoti",
+      searchBarPlaceholder: "Ieškoti kažko",
     },
     tableOfContents: {
       title: "Turinys",
@@ -62,46 +62,37 @@ export default {
   },
   pages: {
     rss: {
-      recentNotes: "Naujausi užrašai",
-      lastFewNotes: ({ count }) =>
-        count === 1
-          ? "Paskutinis 1 užrašas"
-          : count < 10
-            ? `Paskutiniai ${count} užrašai`
-            : `Paskutiniai ${count} užrašų`,
+      recentNotes: "Paskutinės pastabos",
+      lastFewNotes: ({ count }) => `Paskutinės ${count} pastabos`,
     },
     error: {
       title: "Nerasta",
-      notFound:
-        "Arba šis puslapis yra pasiekiamas tik tam tikriems vartotojams, arba tokio puslapio nėra.",
+      notFound: "Šis puslapis yra privatus arba neegzistuoja.",
       home: "Grįžti į pagrindinį puslapį",
     },
     folderContent: {
       folder: "Aplankas",
       itemsUnderFolder: ({ count }) =>
-        count === 1
-          ? "1 elementas šiame aplanke."
-          : count < 10
-            ? `${count} elementai šiame aplanke.`
-            : `${count} elementų šiame aplanke.`,
+        count === 1 ? "1 elementas šiame aplanke." : `${count} elementai(-ų) šiame aplanke.`,
     },
     tagContent: {
-      tag: "Žyma",
-      tagIndex: "Žymų indeksas",
+      tag: "Žymė",
+      tagIndex: "Žymių indeksas",
       itemsUnderTag: ({ count }) =>
-        count === 1
-          ? "1 elementas su šia žyma."
-          : count < 10
-            ? `${count} elementai su šia žyma.`
-            : `${count} elementų su šia žyma.`,
-      showingFirst: ({ count }) =>
-        count < 10 ? `Rodomos pirmosios ${count} žymos.` : `Rodomos pirmosios ${count} žymų.`,
-      totalTags: ({ count }) =>
-        count === 1
-          ? "Rasta iš viso 1 žyma."
-          : count < 10
-            ? `Rasta iš viso ${count} žymos.`
-            : `Rasta iš viso ${count} žymų.`,
+        count === 1 ? "1 elementas pažymėtas šia žyme." : `${count} elementai(-ų) pažymėti šia žyme.`,
+      showingFirst: ({ count }) => `Rodomas pirmas ${count} žymes(-ių).`,
+      totalTags: ({ count }) => `Iš viso rasta ${count} žymes(-ių).`,
+    },
+    encryptedContent: {
+      loading: "Įkeliama 🔃",
+      password: "Slaptažodis",
+      submit: "Pateikti",
+      enterPassword: "Šis puslapis užrakintas. Įveskite slaptažodį atrakinti:",
+      modernBrowser: "Norėdami atrakinti šį puslapį, naudokite šiuolaikiškesnę naršyklę.",
+      wrongPassword: "Neteisingas slaptažodis. Įveskite slaptažodį:",
+      noPayload: "Nėra šifruoto turinio.",
+      decrypting: "Iššifruojama...",
+      defaultDescription: "Šis puslapis šifruotas.",
     },
   },
 } as const satisfies Translation
