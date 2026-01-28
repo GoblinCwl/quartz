@@ -2,6 +2,44 @@ import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 import CustomContentMeta from "./quartz/components/CustomContentMeta"
 
+// 自定义排序函数
+const customSortFunction = (a: any, b: any) => {
+  // 定义排序映射
+  const orderMap: Record<string, number> = {
+    "Temp": 1,
+    "Private": 2,
+    "Memo": 3,
+    "Study": 4,
+    "Work": 5,
+    "Game": 6,
+    "Resources": 7,
+    // 添加更多自定义排序
+  };
+
+  // 尝试从映射中获取排序值，如果没有则使用默认排序
+  const orderA = orderMap[a.slugSegment] ?? Number.MAX_SAFE_INTEGER;
+  const orderB = orderMap[b.slugSegment] ?? Number.MAX_SAFE_INTEGER;
+
+  // 如果都有指定排序，则按指定排序
+  if (orderA !== Number.MAX_SAFE_INTEGER || orderB !== Number.MAX_SAFE_INTEGER) {
+    return orderA - orderB;
+  }
+
+  // 否则使用默认排序：文件夹优先，然后按字母顺序
+  if ((!a.isFolder && !b.isFolder) || (a.isFolder && b.isFolder)) {
+    return a.displayName.localeCompare(b.displayName, undefined, {
+      numeric: true,
+      sensitivity: "base",
+    });
+  }
+
+  if (!a.isFolder && b.isFolder) {
+    return 1;
+  } else {
+    return -1;
+  }
+};
+
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
@@ -51,7 +89,9 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      sortFn: customSortFunction,
+    }),
   ],
   right: [
     Component.Graph(),
@@ -79,7 +119,9 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      sortFn: customSortFunction,
+    }),
   ],
   right: [],
 }
