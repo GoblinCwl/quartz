@@ -92,6 +92,14 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer({
       sortFn: customSortFunction,
     }),
+    Component.ConditionalRender({
+      component: Component.RecentNotes({
+        title: "最近在写" ,
+        limit: 5,
+        showTags: false
+      }),
+      condition: (page) => page.fileData.slug === "index",
+    }),
   ],
   right: [
     Component.Graph(),
