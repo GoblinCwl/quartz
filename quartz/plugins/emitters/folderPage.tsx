@@ -13,12 +13,13 @@ import {
   joinSegments,
   pathToRoot,
   simplifySlug,
+  slugifyFilePath,
 } from "../../util/path"
 import { defaultListPageLayout, sharedPageComponents } from "../../../quartz.layout"
 import { FolderContent } from "../../components"
 import { write } from "./helpers"
 import { i18n, TRANSLATIONS } from "../../i18n"
-import { BuildCtx } from "../../util/ctx"
+import {BuildCtx, trieFromAllFiles} from "../../util/ctx"
 import { StaticResources } from "../../util/resources"
 interface FolderPageOptions extends FullPageLayout {
   sort?: (f1: QuartzPluginData, f2: QuartzPluginData) => number
@@ -40,7 +41,7 @@ async function* processFolderInfo(
     const cfg = ctx.cfg.configuration
     const externalResources = pageResources(pathToRoot(slug), resources)
     const componentData: QuartzComponentProps = {
-      ctx,
+      ctx: { ...ctx, trie: trieFromAllFiles(allFiles) },
       fileData: file.data,
       externalResources,
       cfg,
@@ -152,8 +153,18 @@ export const FolderPage: QuartzEmitterPlugin<Partial<FolderPageOptions>> = (user
       // Find all folders that need to be updated based on changed files
       const affectedFolders: Set<SimpleSlug> = new Set()
       for (const changeEvent of changeEvents) {
-        if (!changeEvent.file) continue
-        const slug = changeEvent.file.data.slug!
+        let slug: FullSlug
+        if (changeEvent.file) {
+          slug = changeEvent.file.data.slug!
+        } else {
+          // For events without file data (e.g., delete events), use the path to create slug
+          if (changeEvent.type === "delete") {
+            slug = slugifyFilePath(changeEvent.path)
+          } else {
+            continue // Skip other types of events without file data
+          }
+        }
+
         const folders = _getFolders(slug).filter(
           (folderName) => folderName !== "." && folderName !== "tags",
         )
