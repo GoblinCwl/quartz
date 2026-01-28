@@ -12,6 +12,7 @@ import {Root, Element, ElementContent} from "hast"
 import {GlobalConfiguration} from "../cfg"
 import {i18n} from "../i18n"
 import {styleText} from "util"
+import { VNode } from "preact"
 import TableOfContents from "./TableOfContents" // 添加这个导入
 
 interface RenderComponents {
@@ -274,17 +275,18 @@ export async function renderPage(
 
         // 文章目录
         const TocComponent = TableOfContents()
-        const tocElement = <TocComponent
-            fileData={componentData.fileData}
-            cfg={{
+        const tocProps: any = {
+            fileData: componentData.fileData,
+            cfg: {
                 ...componentData.cfg,
                 passProtected: {
                     ...componentData.cfg?.passProtected,
                     enabled: false  // 临时关闭
                 }
-            }}
-            displayClass={componentData.displayClass}
-        />
+            },
+            displayClass: componentData.displayClass
+        };
+        const tocElement: VNode = <TocComponent {...tocProps} /> as any
         componentData.encryptedToc = await getEncryptedPayload(
             render(tocElement),
             componentData.fileData.frontmatter.passphrase.toString(),
