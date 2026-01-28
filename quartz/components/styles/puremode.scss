@@ -16,10 +16,32 @@ body.pure-mode {
   footer > :not(.pure-mode-footer) {
     display: none !important;
   }
+  
+  /* 隐藏page-footer元素本身 */
+  .page-footer {
+    display: none !important;
+  }
 
   /* 隐藏关系图谱 */
   .graph {
     display: none !important;
+  }
+  
+  /* 让标签不可点击 */
+  .tags {
+    pointer-events: none;
+    
+    a {
+      pointer-events: none;
+      text-decoration: none;
+      color: inherit;
+      cursor: default;
+      
+      &:hover {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
   }
   
   /* 调整页面布局以适应缺少左边栏的情况 */
