@@ -21,9 +21,6 @@ jobs:
           port: ${{ secrets.WINDOWS_PORT }}
           script: |
             powershell -Command "if (Test-Path 'D:\Service\DockerCompose\quartz4\quartz') { Remove-Item -Recurse -Force 'D:\Service\DockerCompose\quartz4\quartz' }"
-            powershell -Command "if (Test-Path 'D:\Service\DockerCompose\quartz4\quartz.config.ts') { Remove-Item -Force 'D:\Service\DockerCompose\quartz4\quartz.config.ts' }"
-            powershell -Command "if (Test-Path 'D:\Service\DockerCompose\quartz4\quartz.layout.ts') { Remove-Item -Force 'D:\Service\DockerCompose\quartz4\quartz.layout.ts' }"
-
       - name: Copy files to Windows
         uses: appleboy/scp-action@v0.1.4
         with:
