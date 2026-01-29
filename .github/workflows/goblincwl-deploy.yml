@@ -51,7 +51,7 @@ jobs:
               docker restart quartz4
             
               echo '5. 验证部署...'
-              sleep 2
+              sleep 5
               docker ps --filter name=quartz4 --format 'table {{.Names}}\t{{.Status}}'
             
               echo '✅ 部署完成！'
