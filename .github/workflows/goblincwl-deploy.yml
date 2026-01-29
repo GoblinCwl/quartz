@@ -12,12 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug - Check Secrets
-        run: |
-            echo "Host is set: ${{ secrets.WINDOWS_HOST != '' }}"
-            echo "User is set: ${{ secrets.WINDOWS_USER != '' }}"
-            echo "Password is set: ${{ secrets.WINDOWS_PASSWORD != '' }}"
-
       - name: Copy files to Windows
         uses: appleboy/scp-action@v0.1.4
         with:
