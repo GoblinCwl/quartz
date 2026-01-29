@@ -11,12 +11,15 @@ function initImageLoading() {
     img.classList.add("image-loading")
     
     // 检查图片是否已经加载
+    // @ts-ignore
     if (img.complete) {
       // 如果图片已经加载，则直接添加loaded类
+      // @ts-ignore
       addLoadedClass(img)
     } else {
       // 监听图片加载事件
       img.addEventListener("load", () => {
+        // @ts-ignore
         addLoadedClass(img)
       })
       
