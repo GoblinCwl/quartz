@@ -21,6 +21,8 @@ jobs:
           port: ${{ secrets.WINDOWS_PORT }}
           script: |
             echo "正在清理远程目录..."
+            wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/remote-code
+            wsl -d Ubuntu mkdir /mnt/d/Service/DockerCompose/quartz4/remote-code
             rmdir /s /q "D:\Service\DockerCompose\quartz4\remote-code" 2>nul || true
             mkdir "D:\Service\DockerCompose\quartz4\remote-code"
             echo "远程目录清理完成。"
@@ -45,25 +47,11 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           script: |
+            wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz
+            wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz.config.ts
+            wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz.layout.ts
             
-            powershell -Command "
-            # 1. 生成时间戳并备份
-            `$timestamp = Get-Date -Format 'yyyyMMdd_HHmmss'
-            `$backupDir = 'D:\Service\DockerCompose\backups\' + `$timestamp
-            New-Item -ItemType Directory -Path `$backupDir -Force | Out-Null
-            Copy-Item 'D:\Service\DockerCompose\quartz' `$backupDir -Recurse -ErrorAction SilentlyContinue
-            Copy-Item 'D:\Service\DockerCompose\quartz.config.ts' `$backupDir -ErrorAction SilentlyContinue
-            Copy-Item 'D:\Service\DockerCompose\quartz.layout.ts' `$backupDir -ErrorAction SilentlyContinue
-            Write-Host '[PowerShell] 备份完成到: ' `$backupDir"
-            
-            Remove-Item "D:\Service\DockerCompose\quartz" -Recurse -Force -ErrorAction SilentlyContinue
-            Remove-Item "D:\Service\DockerCompose\quartz.config.ts" -Force -ErrorAction SilentlyContinue
-            Remove-Item "D:\Service\DockerCompose\quartz.layout.ts" -Force -ErrorAction SilentlyContinue
-            
-            Copy-Item "D:\Service\DockerCompose\quartz4\remote-code\quartz" "D:\Service\DockerCompose\" -Recurse -Force
-            Copy-Item "D:\Service\DockerCompose\quartz4\remote-code\quartz.config.ts" "D:\Service\DockerCompose\" -Force
-            Copy-Item "D:\Service\DockerCompose\quartz4\remote-code\quartz.layout.ts" "D:\Service\DockerCompose\" -Force
-            Write-Host "文件复制完成"
+            wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/* /mnt/d/Service/DockerCompose/quartz4/
             
             wsl -d Ubuntu docker restart quartz4
             
