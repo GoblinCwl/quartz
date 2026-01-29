@@ -20,12 +20,7 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           script: |
-            powershell -Command "
-              $path = 'D:\Service\DockerCompose\quartz4\remote-code'
-              if (Test-Path $path) {
-              Remove-Item -Recurse -Force $path
-            }
-            "
+            powershell -Command "if (Test-Path 'D:\Service\DockerCompose\quartz4\remote-code') { Remove-Item -Recurse -Force 'D:\Service\DockerCompose\quartz4\remote-code' }; New-Item -ItemType Directory -Path 'D:\Service\DockerCompose\quartz4\remote-code' -Force | Out-Null"
 
       - name: Copy files to Windows
         uses: appleboy/scp-action@v0.1.4
