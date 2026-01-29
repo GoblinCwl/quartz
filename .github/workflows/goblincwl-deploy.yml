@@ -45,7 +45,7 @@ jobs:
             wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz
             wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz.config.ts
             wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz.layout.ts
-            powershell -Command "New-Item -ItemType Directory -Path 'D:\Service\DockerCompose\quartz4\quartz' -Force | Out-Null"
+            powershell -Command "if (Test-Path 'D:\Service\DockerCompose\quartz4\remote-code') { Remove-Item -Recurse -Force 'D:\Service\DockerCompose\quartz4\remote-code' }; New-Item -ItemType Directory -Path 'D:\Service\DockerCompose\quartz4\quartz' -Force | Out-Null"
             wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz /mnt/d/Service/DockerCompose/quartz4/quartz
             wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.config.ts /mnt/d/Service/DockerCompose/quartz4/quartz.config.ts
             wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.layout.ts /mnt/d/Service/DockerCompose/quartz4/quartz.layout.ts
