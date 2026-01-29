@@ -21,7 +21,17 @@ const copyFile = async (argv: Argv, fp: FilePath) => {
   const dir = path.dirname(dest) as FilePath
   await fs.promises.mkdir(dir, { recursive: true })
 
-  await fs.promises.copyFile(src, dest)
+  // Check if source file exists before attempting to copy
+  try {
+    await fs.promises.copyFile(src, dest)
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === 'ENOENT') {
+      console.warn(`Warning: Source file does not exist, skipping copy: ${src}`)
+      return null // Return null to indicate the file was skipped
+    } else {
+      throw e // Re-throw if it's a different error
+    }
+  }
   return dest
 }
 
@@ -31,7 +41,10 @@ export const Assets: QuartzEmitterPlugin = () => {
     async *emit({ argv, cfg }) {
       const fps = await filesToCopy(argv, cfg)
       for (const fp of fps) {
-        yield copyFile(argv, fp)
+        const result = await copyFile(argv, fp)
+        if (result !== null) {
+          yield result
+        }
       }
     },
     async *partialEmit(ctx, _content, _resources, changeEvents) {
@@ -40,11 +53,21 @@ export const Assets: QuartzEmitterPlugin = () => {
         if (ext === ".md") continue
 
         if (changeEvent.type === "add" || changeEvent.type === "change") {
-          yield copyFile(ctx.argv, changeEvent.path)
+          const result = await copyFile(ctx.argv, changeEvent.path)
+          if (result !== null) {
+            yield result
+          }
         } else if (changeEvent.type === "delete") {
           const name = slugifyFilePath(changeEvent.path)
           const dest = joinSegments(ctx.argv.output, name) as FilePath
-          await fs.promises.unlink(dest)
+          try {
+            await fs.promises.unlink(dest)
+          } catch (e) {
+            if ((e as NodeJS.ErrnoException).code !== 'ENOENT') {
+              throw e // Re-throw if it's a different error
+            }
+            // If file doesn't exist, that's fine - we were trying to delete it anyway
+          }
         }
       }
     },
