@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           source: "quartz,quartz.config.ts,quartz.layout.ts"
-          target: "D:\Service\DockerCompose\quartz4\remote-code\"
+          target: "D:/Service/DockerCompose/quartz4/remote-code/"
           overwrite: false
           rm: false
 
