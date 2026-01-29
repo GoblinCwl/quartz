@@ -1,0 +1,58 @@
+name: Deploy Quartz4
+
+on:
+  push:
+    branches: [v4]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Copy files to Windows
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.WINDOWS_HOST }}
+          username: ${{ secrets.WINDOWS_USER }}
+          password: ${{ secrets.WINDOWS_PASSWORD }}
+          source: "quartz,quartz.config.ts,quartz.layout.ts"
+          target: "D:/Service/DockerCompose/quartz4/remote-code/"
+          overwrite: true
+          rm: false
+
+      - name: Execute in WSL and Restart
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.WINDOWS_HOST }}
+          username: ${{ secrets.WINDOWS_USER }}
+          password: ${{ secrets.WINDOWS_PASSWORD }}
+          script: |
+            wsl -d Ubuntu bash -c "
+              cd /mnt/d/Service/DockerCompose/
+            
+              echo '1. 备份原文件...'
+              timestamp=\$(date +%Y%m%d_%H%M%S)
+              mkdir -p backups/\$timestamp
+              cp -rf quartz quartz.config.ts quartz.layout.ts backups/\$timestamp/ 2>/dev/null || true
+            
+              echo '2. 删除原文件...'
+              rm -rf quartz quartz.config.ts quartz.layout.ts
+            
+              echo '3. 复制新文件从Windows目录...'
+              # 修正3: 正确引用Windows传输的文件路径
+              cp -r '/mnt/d/Service/DockerCompose/quartz4/remote-code/quartz' .
+              cp '/mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.config.ts' .
+              cp '/mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.layout.ts' .
+            
+              echo '4. 重启Docker容器...'
+              docker restart quartz4
+            
+              echo '5. 验证部署...'
+              sleep 2
+              docker ps --filter name=quartz4 --format 'table {{.Names}}\t{{.Status}}'
+            
+              echo '✅ 部署完成！'
+            "
