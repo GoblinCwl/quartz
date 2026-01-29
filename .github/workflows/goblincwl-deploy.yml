@@ -47,28 +47,25 @@ jobs:
           script: |
             
             $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
-            Write-Host "备份时间戳: $timestamp"
+            $backupDir = "D:\Service\DockerCompose\backups\$timestamp"
+            New-Item -ItemType Directory -Path $backupDir -Force | Out-Null
+            Copy-Item "D:\Service\DockerCompose\quartz" $backupDir -Recurse -ErrorAction SilentlyContinue
+            Copy-Item "D:\Service\DockerCompose\quartz.config.ts" $backupDir -ErrorAction SilentlyContinue
+            Copy-Item "D:\Service\DockerCompose\quartz.layout.ts" $backupDir -ErrorAction SilentlyContinue
+            Write-Host "备份完成到: $backupDir"
             
-            # WSL操作
-            wsl -d Ubuntu echo "1. 备份原文件..."
-            wsl -d Ubuntu mkdir -p "/mnt/d/Service/DockerCompose/backups/$timestamp"
-            wsl -d Ubuntu cp -rf /mnt/d/Service/DockerCompose/quartz /mnt/d/Service/DockerCompose/quartz.config.ts /mnt/d/Service/DockerCompose/quartz.layout.ts "/mnt/d/Service/DockerCompose/backups/$timestamp/" 2>/dev/null || true
+            Remove-Item "D:\Service\DockerCompose\quartz" -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-Item "D:\Service\DockerCompose\quartz.config.ts" -Force -ErrorAction SilentlyContinue
+            Remove-Item "D:\Service\DockerCompose\quartz.layout.ts" -Force -ErrorAction SilentlyContinue
             
-            wsl -d Ubuntu echo "2. 删除原文件..."
-            wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz /mnt/d/Service/DockerCompose/quartz.config.ts /mnt/d/Service/DockerCompose/quartz.layout.ts
+            Copy-Item "D:\Service\DockerCompose\quartz4\remote-code\quartz" "D:\Service\DockerCompose\" -Recurse -Force
+            Copy-Item "D:\Service\DockerCompose\quartz4\remote-code\quartz.config.ts" "D:\Service\DockerCompose\" -Force
+            Copy-Item "D:\Service\DockerCompose\quartz4\remote-code\quartz.layout.ts" "D:\Service\DockerCompose\" -Force
+            Write-Host "文件复制完成"
             
-            wsl -d Ubuntu echo "3. 复制新文件从Windows目录..."
-            # 先检查文件是否已传输到位
-            wsl -d Ubuntu ls -la "/mnt/d/Service/DockerCompose/quartz4/remote-code/"
-            wsl -d Ubuntu cp -r "/mnt/d/Service/DockerCompose/quartz4/remote-code/quartz" /mnt/d/Service/DockerCompose/
-            wsl -d Ubuntu cp "/mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.config.ts" /mnt/d/Service/DockerCompose/
-            wsl -d Ubuntu cp "/mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.layout.ts" /mnt/d/Service/DockerCompose/
-            
-            wsl -d Ubuntu echo "4. 重启Docker容器..."
             wsl -d Ubuntu docker restart quartz4
             
-            wsl -d Ubuntu echo "5. 验证部署..."
             wsl -d Ubuntu sleep 3
             wsl -d Ubuntu docker ps --filter name=quartz4 --format "table {{.Names}}\t{{.Status}}"
             
-            wsl -d Ubuntu echo "✅ 部署完成！"
+            Write-Host "✅ 部署完成！"
