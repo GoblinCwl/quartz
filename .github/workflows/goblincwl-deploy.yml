@@ -45,30 +45,33 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           script: |
-            $bashScript = @'
-            cd /mnt/d/Service/DockerCompose/
+            wsl -d Ubuntu bash -c "
+            cd /mnt/d/Service/DockerCompose/ || exit 1
             
             echo '1. 备份原文件...'
-            timestamp=$(date +%Y%m%d_%H%M%S)
-            mkdir -p backups/$timestamp
-            cp -rf quartz quartz.config.ts quartz.layout.ts backups/$timestamp/ 2>/dev/null || true
+            timestamp=\$(date +%Y%m%d_%H%M%S)
+            mkdir -p backups/\$timestamp
+            cp -rf quartz quartz.config.ts quartz.layout.ts backups/\$timestamp/ 2>/dev/null || true
             
             echo '2. 删除原文件...'
             rm -rf quartz quartz.config.ts quartz.layout.ts
             
             echo '3. 复制新文件从Windows目录...'
+            # 先检查文件是否存在
+            if [ ! -d '/mnt/d/Service/DockerCompose/quartz4/remote-code/quartz' ]; then
+              echo '错误：quartz目录不存在！'
+              exit 1
+            fi
             cp -r '/mnt/d/Service/DockerCompose/quartz4/remote-code/quartz' .
             cp '/mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.config.ts' .
             cp '/mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.layout.ts' .
             
             echo '4. 重启Docker容器...'
-            docker restart quartz4
+            docker restart quartz4 || echo '警告：重启容器失败'
             
             echo '5. 验证部署...'
             sleep 5
             docker ps --filter name=quartz4 --format 'table {{.Names}}\t{{.Status}}'
             
             echo '✅ 部署完成！'
-            '@
-            
-            wsl -d Ubuntu bash -c $bashScript
+            "
