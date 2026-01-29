@@ -89,6 +89,7 @@ const config: QuartzConfig = {
       Plugin.Furigana({ enabled: true }),
       // 角标插件
       Plugin.Subscript({ enabled: true }),
+      Plugin.Images({ imageEffects: true }),
     ],
     filters: [Plugin.RemoveDrafts(),Plugin.ExplicitPublish()],
     emitters: [
