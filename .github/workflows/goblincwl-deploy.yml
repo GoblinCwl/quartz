@@ -50,9 +50,9 @@ jobs:
             wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz
             wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz.config.ts
             wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz.layout.ts
-            wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz /mnt/d/Service/DockerCompose/quartz4/
-            wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.config.ts /mnt/d/Service/DockerCompose/quartz4/
-            wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.layout.ts /mnt/d/Service/DockerCompose/quartz4/
+            wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz /mnt/d/Service/DockerCompose/quartz4/quartz
+            wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.config.ts /mnt/d/Service/DockerCompose/quartz4/quartz.config.ts
+            wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.layout.ts /mnt/d/Service/DockerCompose/quartz4/quartz.layout.ts
             wsl -d Ubuntu docker restart quartz4
             wsl -d Ubuntu sleep 3
             wsl -d Ubuntu docker ps --filter name=quartz4 --format "table {{.Names}}\t{{.Status}}"
