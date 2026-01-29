@@ -90,6 +90,7 @@ const config: QuartzConfig = {
       // 角标插件
       Plugin.Subscript({ enabled: true }),
       Plugin.Images({ imageEffects: true }),
+      Plugin.ViewImage(),
     ],
     filters: [Plugin.RemoveDrafts(),Plugin.ExplicitPublish()],
     emitters: [

@@ -68,6 +68,30 @@ const changeArtalkReaderMode = (e: any) => {
   }
 }
 
+// 初始化ViewImage灯箱功能
+const initArtalkImageView = () => {
+  // 等待一小段时间确保Artalk图片已渲染
+  setTimeout(() => {
+    if (window && (window as any).ViewImage) {
+      // 对Artalk评论中的图片初始化ViewImage，排除头像、表情和表情选择器中的图片
+      (window as any).ViewImage.init('#artalk-comments img:not(.atk-avatar):not(.atk-emo):not(.atk-item img)');
+    } else {
+      // 如果ViewImage还未加载，等待其加载后初始化
+      const checkViewImage = setInterval(() => {
+        if (window && (window as any).ViewImage) {
+          clearInterval(checkViewImage);
+          (window as any).ViewImage.init('#artalk-comments img:not(.atk-avatar):not(.atk-emo):not(.atk-item img)');
+        }
+      }, 100);
+      
+      // 设置超时以防止无限等待
+      setTimeout(() => {
+        clearInterval(checkViewImage);
+      }, 5000);
+    }
+  }, 500);
+}
+
 // 尝试加载Artalk
 const tryLoadArtalk = () => {
   const artalkContainer: HTMLElement | null = document.getElementById("artalk-comments")
@@ -211,6 +235,9 @@ const tryLoadArtalk = () => {
           }
         }, 100)
       }
+      
+      // 初始化ViewImage灯箱功能
+      initArtalkImageView();
     }
 
     // 先加载CSS，等CSS加载完成后再加载JS
