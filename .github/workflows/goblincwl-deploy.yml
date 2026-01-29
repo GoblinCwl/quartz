@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           script: |
-            powershell -Command "if (Test-Path 'D:\Service\DockerCompose\quartz4\remote-code') { Remove-Item -Recurse -Force 'D:\Service\DockerCompose\quartz4\remote-code' }; New-Item -ItemType Directory -Path 'D:\Service\DockerCompose\quartz4\remote-code' -Force | Out-Null"
+            powershell -Command "Remove-Item -Recurse -Force 'D:\Service\DockerCompose\quartz4\quartz', 'D:\Service\DockerCompose\quartz4\quartz.config.ts', 'D:\Service\DockerCompose\quartz4\quartz.layout.ts' -ErrorAction SilentlyContinue"
 
       - name: Copy files to Windows
         uses: appleboy/scp-action@v0.1.4
@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           source: "quartz,quartz.config.ts,quartz.layout.ts"
-          target: "D:/Service/DockerCompose/quartz4/remote-code/"
+          target: "D:/Service/DockerCompose/quartz4/"
           overwrite: false
           rm: false
 
@@ -42,13 +42,6 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           script: |
-            wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz
-            wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz.config.ts
-            wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz.layout.ts
-            powershell -Command "if (Test-Path 'D:\Service\DockerCompose\quartz4\remote-code') { Remove-Item -Recurse -Force 'D:\Service\DockerCompose\quartz4\remote-code' }; New-Item -ItemType Directory -Path 'D:\Service\DockerCompose\quartz4\quartz' -Force | Out-Null"
-            wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz /mnt/d/Service/DockerCompose/quartz4/quartz
-            wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.config.ts /mnt/d/Service/DockerCompose/quartz4/quartz.config.ts
-            wsl -d Ubuntu mv /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.layout.ts /mnt/d/Service/DockerCompose/quartz4/quartz.layout.ts
             wsl -d Ubuntu docker restart quartz4
             wsl -d Ubuntu sleep 3
             wsl -d Ubuntu docker ps --filter name=quartz4 --format "table {{.Names}}\t{{.Status}}"
