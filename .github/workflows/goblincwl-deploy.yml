@@ -20,12 +20,8 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           script: |
-            echo "正在清理远程目录..."
             wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/remote-code
             wsl -d Ubuntu mkdir /mnt/d/Service/DockerCompose/quartz4/remote-code
-            rmdir /s /q "D:\Service\DockerCompose\quartz4\remote-code" 2>nul || true
-            mkdir "D:\Service\DockerCompose\quartz4\remote-code"
-            echo "远程目录清理完成。"
 
       - name: Copy files to Windows
         uses: appleboy/scp-action@v0.1.4
@@ -50,6 +46,7 @@ jobs:
             wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz
             wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz.config.ts
             wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/quartz.layout.ts
+            wsl -d Ubuntu mkdir /mnt/d/Service/DockerCompose/quartz4/quartz
             wsl -d Ubuntu cp /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz /mnt/d/Service/DockerCompose/quartz4/quartz
             wsl -d Ubuntu cp /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.config.ts /mnt/d/Service/DockerCompose/quartz4/quartz.config.ts
             wsl -d Ubuntu cp /mnt/d/Service/DockerCompose/quartz4/remote-code/quartz.layout.ts /mnt/d/Service/DockerCompose/quartz4/quartz.layout.ts
