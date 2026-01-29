@@ -20,8 +20,12 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           script: |
-            wsl -d Ubuntu rm -rf /mnt/d/Service/DockerCompose/quartz4/remote-code
-            mkdir "D:/Service/DockerCompose/quartz4/remote-code"
+            powershell -Command "
+              $path = 'D:\Service\DockerCompose\quartz4\remote-code'
+              if (Test-Path $path) {
+              Remove-Item -Recurse -Force $path
+            }
+            "
 
       - name: Copy files to Windows
         uses: appleboy/scp-action@v0.1.4
@@ -31,7 +35,7 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           source: "quartz,quartz.config.ts,quartz.layout.ts"
-          target: "D:/Service/DockerCompose/quartz4/remote-code/"
+          target: "D:\Service\DockerCompose\quartz4\remote-code\"
           overwrite: false
           rm: false
 
