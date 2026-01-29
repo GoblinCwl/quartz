@@ -45,7 +45,6 @@ jobs:
           password: ${{ secrets.WINDOWS_PASSWORD }}
           port: ${{ secrets.WINDOWS_PORT }}
           script: |
-            # 使用PowerShell的Here-String语法 @' ... '@ 来包裹多行Bash脚本
             $bashScript = @'
             cd /mnt/d/Service/DockerCompose/
             
@@ -72,5 +71,4 @@ jobs:
             echo '✅ 部署完成！'
             '@
             
-            # 执行脚本
             wsl -d Ubuntu bash -c $bashScript
