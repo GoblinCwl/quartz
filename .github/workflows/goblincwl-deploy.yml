@@ -24,6 +24,19 @@ jobs:
           overwrite: true
           rm: false
 
+      - name: Clean Remote Directory Before Copy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.WINDOWS_HOST }}
+          username: ${{ secrets.WINDOWS_USER }}
+          password: ${{ secrets.WINDOWS_PASSWORD }}
+          port: ${{ secrets.WINDOWS_PORT }}
+          script: |
+            echo "正在清理远程目录..."
+            rmdir /s /q "D:\Service\DockerCompose\quartz4\remote-code" 2>nul || true
+            mkdir "D:\Service\DockerCompose\quartz4\remote-code"
+            echo "远程目录清理完成。"
+
       - name: Execute in WSL and Restart
         uses: appleboy/ssh-action@v1.0.3
         with:
