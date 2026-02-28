@@ -54,7 +54,8 @@ export const sharedPageComponents: SharedLayout = {
   ],
   footer: Component.Footer({
     links: {
-      GitHub: "https://github.com/GoblinCw",
+      "湘ICP备2026004810号": "http://beian.miit.gov.cn",
+      GitHub: "https://github.com/GoblinCwl",
       "Bilibili" :"https://space.bilibili.com/13536815",
       "Steam": "https://steamcommunity.com/id/goblincwl/"
     },

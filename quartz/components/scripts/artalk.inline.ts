@@ -92,6 +92,11 @@ const initArtalkImageView = () => {
   }, 500);
 }
 
+// 验证Artalk资源是否真正可用
+const isArtalkAvailable = (): boolean => {
+  return !!(window as any).Artalk;
+};
+
 // 尝试加载Artalk
 const tryLoadArtalk = () => {
   const artalkContainer: HTMLElement | null = document.getElementById("artalk-comments")
@@ -138,9 +143,10 @@ const tryLoadArtalk = () => {
       };
       
       link.onerror = () => {
-        // 即使CSS加载失败也显示容器，避免组件完全不显示
-        artalkContainer.classList.remove("artalk-loading");
-        resolve(); // 即使出错也要resolve，不要阻塞后续流程
+        // CSS加载失败时完全隐藏评论框
+        artalkContainer.style.display = 'none';
+        console.error('Failed to load Artalk CSS');
+        resolve();
       };
       
       document.head.appendChild(link)
@@ -176,18 +182,27 @@ const tryLoadArtalk = () => {
       fallbackScript.src = "https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"
       fallbackScript.crossOrigin = "anonymous";
       fallbackScript.onload = () => {
-        initArtalk()
-        const savedTheme: string | null = localStorage.getItem('artalk-theme-preference')
-        if (savedTheme) {
-          setTimeout(() => {
-            if (artalkInstance && typeof artalkInstance.setDarkMode === 'function') {
-              const isDarkMode: boolean = savedTheme === 'dark'
-              artalkInstance.setDarkMode(isDarkMode)
-            }
-          }, 100)
+        // 验证fallback加载是否成功
+        if (isArtalkAvailable()) {
+          initArtalk()
+          const savedTheme: string | null = localStorage.getItem('artalk-theme-preference')
+          if (savedTheme) {
+            setTimeout(() => {
+              if (artalkInstance && typeof artalkInstance.setDarkMode === 'function') {
+                const isDarkMode: boolean = savedTheme === 'dark'
+                artalkInstance.setDarkMode(isDarkMode)
+              }
+            }, 100)
+          }
+        } else {
+          // fallback也失败，完全隐藏评论框
+          artalkContainer.style.display = 'none';
+          console.error("Failed to load Artalk from fallback CDN")
         }
       }
       fallbackScript.onerror = () => {
+        // 所有加载方式都失败，完全隐藏评论框
+        artalkContainer.style.display = 'none';
         console.error("Failed to load Artalk script from CDN fallback")
       }
       document.head.appendChild(fallbackScript)
@@ -197,8 +212,9 @@ const tryLoadArtalk = () => {
 
   // 初始化Artalk
   const initArtalk = () => {
-    if (!(window as any).Artalk) {
-      console.error("Artalk is not loaded")
+    if (!isArtalkAvailable()) {
+      console.error("Artalk is not loaded, hiding comment section")
+      artalkContainer.style.display = 'none';
       return
     }
 
