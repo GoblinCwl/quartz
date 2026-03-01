@@ -7,7 +7,5 @@ RUN npm ci
 FROM node:22-slim
 WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/ /usr/src/app/
-COPY rebuild-server /usr/local/bin/main
-RUN chmod +x /usr/local/bin/main
 COPY . .
 CMD ["rebuild-server"]

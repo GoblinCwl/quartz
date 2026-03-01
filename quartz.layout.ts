@@ -46,7 +46,7 @@ export const sharedPageComponents: SharedLayout = {
   header: [],
   afterBody: [
     Component.ArtalkComments({
-      server: 'https://artalk.goblincwl.site',
+      server: 'https://app.goblincwl.site/artalk',
       site: 'CwlLibrary',
       useBackendConf: true
     }),
