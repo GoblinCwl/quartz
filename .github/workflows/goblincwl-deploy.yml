@@ -10,10 +10,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Clean Remote Directory Before Copy
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.WINDOWS_HOST }}
           username: ${{ secrets.WINDOWS_USER }}
@@ -22,7 +22,7 @@ jobs:
           script: |
             powershell -Command "if (Test-Path 'D:\Service\DockerCompose\quartz4\quartz') { Remove-Item -Recurse -Force 'D:\Service\DockerCompose\quartz4\quartz' }"
       - name: Copy files to Windows
-        uses: appleboy/scp-action@v0.1.4
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ secrets.WINDOWS_HOST }}
           username: ${{ secrets.WINDOWS_USER }}
@@ -34,7 +34,7 @@ jobs:
           rm: false
 
       - name: Execute in WSL and Restart
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.WINDOWS_HOST }}
           username: ${{ secrets.WINDOWS_USER }}
