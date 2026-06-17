@@ -16,19 +16,25 @@ export const ViewImage: QuartzTransformerPlugin = () => {
                     {
                         script: `
               // 简单的初始化代码
-              document.addEventListener('DOMContentLoaded', function() {
+              function initViewImage() {
                 if (window.ViewImage) {
                   // 使用更通用的选择器
                   ViewImage.init('article img, .content img');
                   // 添加视觉反馈
-                  const style = document.createElement('style');
-                  style.textContent = 'article img, .content img { cursor: zoom-in; border: 2px dashed #284b63; }';
-                  document.head.appendChild(style);
+                  if (!document.getElementById('viewimage-cursor-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'viewimage-cursor-style';
+                    style.textContent = 'article img, .content img { cursor: zoom-in; }';
+                    document.head.appendChild(style);
+                  }
                   console.log('ViewImage灯箱插件已初始化');
                 } else {
                   console.error('ViewImage库未加载成功');
                 }
-              });
+              }
+
+              document.addEventListener('DOMContentLoaded', initViewImage);
+              document.addEventListener('nav', initViewImage);
             `,
                         loadTime: "afterDOMReady",
                         contentType: "inline",

@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "zh-CN",
-    baseUrl: "app.goblincwl.site/blog",
+    baseUrl: "goblincwl.site",
     ignorePatterns: [
       "private",
       "templates",
